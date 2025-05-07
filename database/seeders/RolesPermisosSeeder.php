@@ -1,0 +1,79 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+
+class RolesPermisosSeeder extends Seeder
+{
+    public function run(): void
+    {
+        $role1 = Role::create(['name' => 'Administrador']);
+        $role2 = Role::create(['name' => 'Ejecutivo']);
+        $role3 = Role::create(['name' => 'Profesor nvl 1']);
+        $role4 = Role::create(['name' => 'Profesor nvl 2']);
+
+        //Opciones del Menu
+        Permission::create(['name' => 'specialties.index', 'description' => 'Especialidades', 'module_id' => 1])->syncRoles([$role1, $role2, $role3]);
+        Permission::create(['name' => 'grups.index', 'description' => 'Grupos', 'module_id' => 1])->syncRoles([$role1, $role2, $role3]);
+        Permission::create(['name' => 'students.index', 'description' => 'Estudiantes', 'module_id' => 1])->syncRoles([$role1, $role2, $role3]);
+        Permission::create(['name' => 'subjects.menu', 'description' => 'Materias', 'module_id' => 1])->syncRoles([$role1, $role2, $role3]);
+        Permission::create(['name' => 'teachers.index', 'description' => 'Profesores', 'module_id' => 1])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'positions.index', 'description' => 'Puestos', 'module_id' => 1])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'competenciasDesarrollo.index', 'description' => 'Competencias para el desarrollo humano', 'module_id' => 1])->syncRoles([$role1, $role2, $role3]);
+        Permission::create(['name' => 'roles.index', 'description' => 'Roles y Permisos', 'module_id' => 1])->syncRoles([$role1, $role2]);
+
+        //Especialidades
+        Permission::create(['name' => 'specialties.show', 'description' => 'Mostar información de la especialidad', 'module_id' => 2])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'specialties.create', 'description' => 'Crear especialidades', 'module_id' => 2])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'specialties.edit', 'description' => 'Editar especialidades', 'module_id' => 2])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'specialties.delete', 'description' => 'Eliminar especialidades', 'module_id' => 2])->syncRoles([$role1]);
+
+        //Grupos
+        Permission::create(['name' => 'grups.show', 'description' => 'Mostar información de un grupo', 'module_id' => 3])->syncRoles([$role1, $role2, $role3]);
+        Permission::create(['name' => 'grups.create', 'description' => 'Crear grupos', 'module_id' => 3])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'grups.edit', 'description' => 'Editar grupos', 'module_id' => 3])->syncRoles([$role1]);
+        Permission::create(['name' => 'grups.delete', 'description' => 'Eliminar grupos', 'module_id' => 3])->syncRoles([$role1]);
+
+        //Estudiantes
+        Permission::create(['name' => 'students.show', 'description' => 'Mostar información de un estudiante', 'module_id' => 4])->syncRoles([$role1, $role2, $role3]);
+        Permission::create(['name' => 'students.create', 'description' => 'Crear estudiantes', 'module_id' => 4])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'students.edit', 'description' => 'Editar estudiantes', 'module_id' => 4])->syncRoles([$role1]);
+        Permission::create(['name' => 'students.delete', 'description' => 'Eliminar estudiantes', 'module_id' => 4])->syncRoles([$role1]);
+
+        //Materias
+        Permission::create(['name' => 'subjects.index', 'description' => 'Mostrar todas las materias', 'module_id' => 5])->syncRoles([$role1, $role2, $role3]);
+        Permission::create(['name' => 'subjects.show', 'description' => 'Mostar información de la materia', 'module_id' => 5])->syncRoles([$role1, $role2, $role3]);
+        Permission::create(['name' => 'subjects.create', 'description' => 'Crear materias', 'module_id' => 5])->syncRoles([$role1, $role2, $role3]);
+        Permission::create(['name' => 'subjects.edit', 'description' => 'Editar materias', 'module_id' => 5])->syncRoles([$role1, $role2, $role3]);
+        Permission::create(['name' => 'subjects.delete', 'description' => 'Eliminar materias', 'module_id' => 5])->syncRoles([$role1]);
+
+        //Materias impartidas por profesores
+        Permission::create(['name' => 'subjects.teachers.index', 'description' => 'Mostrar todas las materias que imparten los profesores', 'module_id' => 5])->syncRoles([$role1, $role2, $role3]);
+        Permission::create(['name' => 'subjects.teachers.show', 'description' => 'Mostar información de la materia impartida por el profesor', 'module_id' => 5])->syncRoles([$role1, $role2, $role3]);
+        Permission::create(['name' => 'subjects.teachers.create', 'description' => 'Crear materias impartidas por profesores', 'module_id' => 5])->syncRoles([$role1, $role2, $role3]);
+        Permission::create(['name' => 'subjects.teachers.edit', 'description' => 'Editar materias impartidas por profesores', 'module_id' => 5])->syncRoles([$role1, $role2, $role3]);
+        Permission::create(['name' => 'subjects.teachers.delete', 'description' => 'Eliminar materias impartidas por profesores', 'module_id' => 5])->syncRoles([$role1]);
+        
+        //Puestos 
+        Permission::create(['name' => 'positions.create', 'description' => 'Crear puestos', 'module_id' => 6])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'positions.show', 'description' => 'Mostrar informacion del puesto', 'module_id' => 6])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'positions.edit', 'description' => 'Editar puestos', 'module_id' => 6])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'positions.delete', 'description' => 'Eliminar puestos', 'module_id' => 6])->syncRoles([$role1, $role2]);
+
+        //Roles y Permisos
+        Permission::create(['name' => 'roles.show', 'description' => 'Mostar información del rol', 'module_id' => 7])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'roles.create', 'description' => 'Crear roles', 'module_id' => 7])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'roles.edit', 'description' => 'Editar roles', 'module_id' => 7])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'roles.delete', 'description' => 'Eliminar roles', 'module_id' => 7])->syncRoles([$role1]);
+        
+        //Profesores
+        Permission::create(['name' => 'teachers.show', 'description' => 'Mostar información del profesor', 'module_id' => 8])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'teachers.create', 'description' => 'Crear profesores', 'module_id' => 8])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'teachers.edit', 'description' => 'Editar profesores', 'module_id' => 8])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'teachers.delete', 'description' => 'Eliminar profesores', 'module_id' => 8])->syncRoles([$role1]);
+
+    }
+}

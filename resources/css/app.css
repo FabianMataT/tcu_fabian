@@ -1,0 +1,107 @@
+@import "tailwindcss";      
+ 
+@plugin "daisyui" {         
+    themes: light --default, dark --prefersdark;   
+}   
+ 
+@source "../../vendor/robsontenorio/mary/src/View/Components/*/.php"; 
+ 
+@custom-variant dark (&:where(.dark, .dark *)); 
+ 
+@source "../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php"; 
+@source "../../storage/framework/views/*.php"; 
+@source "../*/.blade.php"; 
+@source "../*/.js"; 
+@source "../*/.vue"; 
+
+.mary-table-pagination span[aria-current="page"] > span {
+    @apply bg-primary text-base-100
+}
+
+.mary-table-pagination span[aria-disabled="true"] span {
+    @apply bg-inherit
+}
+
+.mary-table-pagination button {
+    @apply bg-base-100
+}
+
+[x-cloak] {
+    display: none;
+}
+
+.custom-navbar {
+    background-color: rgb(30, 64, 175);
+    color: white;
+}
+.nav-link {
+    color: white;
+    transition: color 0.3s ease;
+}
+.nav-link:hover {
+    color: rgb(191, 219, 254);
+}
+
+.btn-show {
+    background-color: #06b6d4; /* bg-cyan-500 */
+    color: white; 
+    transition: background-color 0.2s ease-in-out;
+}
+
+.btn-show:hover {
+    background-color: #0891b2; /* hover:bg-cyan-600 */
+}
+
+.btn-edit {
+    background-color: #3b82f6; /* bg-blue-500 */
+    color: white; 
+    transition: background-color 0.2s ease-in-out;
+}
+
+.btn-edit:hover {
+    background-color: #2563eb  ; /* hover:bg-blue-600 */
+} 
+
+.btn-delete {
+    background-color: #f87171; /* bg-reed-400 */
+    color: white; 
+    transition: background-color 0.2s ease-in-out;
+}
+
+.btn-delete:hover {
+    background-color: #ef4444   ; /* hover:bg-reed-500 */
+} 
+ 
+.btn-cancel {
+    background-color: #212121; 
+    color: white; 
+    transition: background-color 0.2s ease-in-out;
+}
+
+.dark .btn-cancel {
+    background-color: #100f0f; 
+}
+
+.btn-cancel:hover {
+    background-color: #0d0d0d; 
+}
+
+.table-cover {
+    overflow: visible;
+    padding: 1rem; /* p-4 */
+    border: 2px solid #e5e7eb; /* border-gray-200 */
+    border-radius: 0.5rem; 
+    margin-top: 1.25rem; /* mt-5 */
+}
+
+@media (min-width: 768px) {
+    .table-cover {
+        padding: 2rem; /* md:p-8 */
+    }
+}
+
+.dark .table-cover {
+    border-color: #1f2937; /* dark:border-gray-800 */
+    background-color: #1f2937; /* dark:bg-gray-800 */
+}
+
