@@ -3,25 +3,35 @@
 namespace App\Livewire\Pages\Students;
 
 use App\Models\Grup;
+use App\Models\User;
 use App\Models\Level;
-use App\Models\Specialtie;
 use Mary\Traits\Toast;
 use App\Models\Student;
 use App\Models\SubGrup;
 use Livewire\Component;
+use App\Models\Specialtie;
 use Livewire\WithPagination;
+use Livewire\WithFileUploads;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Pagination\LengthAwarePaginator;
+use App\Actions\Student\ImportStudentsFromExcel;
 
 class Index extends Component
 {
-    use WithPagination, Toast;
+    use WithPagination, Toast, WithFileUploads;
 
-    public bool $modalDeletConf, $modalFilters = false;
+    public bool $modalDeletConf, $modalFilters, $modalStudentsFormExcel = false;
     public $perPage = 10;
     public array $sortBy = ['column' => 'id_card', 'direction' => 'asc'];
     public string $search = '';
     public ?Student $student = null;
-    public $specialties, $levels, $grups, $subGrups;
+    public ?User $user = null;
+    public ?Collection  $specialties, $levels, $grups, $subGrups = null;
+    public $excel, $message;
+    public array $duplicate_students = [];
 
     public ?string $first_name = null;
     public ?string $middle_name = null;
@@ -35,10 +45,12 @@ class Index extends Component
     public ?int $sub_grup_id = null;
     public ?int $selectebleFiltersOptionsloaded = null;
     public int $activeFiltersCount = 0;
+    public int $masiveInsert = 0;
 
 
     public function mount()
     {
+        $this->user = Auth::user();
         $this->selectebleFiltersOptionsloaded = 0;
         $this->specialties = collect();
         $this->levels = collect();
@@ -48,12 +60,18 @@ class Index extends Component
 
     public function students(): LengthAwarePaginator
     {
-        $students = Student::query()
+        $query = Student::query()
             ->with([
                 'subGrup:id,grup_id,specialtie_id,name',
                 'subGrup.specialtie:id,acronym',
-                'subGrup.grup.level:id,name'
+                'subGrup.grup.level:id,name',
             ])
+            ->when(
+                in_array($this->user->teacher->position->name, ['Profesor Académico', 'Profesor Técnico']),
+                fn($q) => $q->whereHas('subGrup.subjects_taught_by_teacher', function ($query) {
+                    $query->where('teacher_id', $this->user->teacher->id);
+                })
+            )
             ->when($this->first_name, fn($q) => $q->where('first_name', 'like', "%{$this->first_name}%"))
             ->when($this->middle_name, fn($q) => $q->where('middle_name', 'like', "%{$this->middle_name}%"))
             ->when($this->last_name1, fn($q) => $q->where('last_name1', 'like', "%{$this->last_name1}%"))
@@ -72,32 +90,43 @@ class Index extends Component
                         ->orWhereHas('subGrup.grup.level', fn($q) => $q->where('name', 'like', "%{$this->search}%"))
                         ->orWhereHas('subGrup.specialtie', fn($q) => $q->where('acronym', 'like', "%{$this->search}%"));
                 });
-            })
-            ->get();
+            });
 
-        $sortCallbacks = [
-            'id_card'     => fn($s) => $s->id_card,
-            'last_name1'  => fn($s) => $s->last_name1,
-            'last_name2'  => fn($s) => $s->last_name2,
-            'name'        => fn($s) => $s->first_name,
-            'level'       => fn($s) => optional($s->subGrup?->grup?->level)->name,
-            'grup'        => fn($s) => optional($s->subGrup?->grup)->name,
-            'specialtie'  => fn($s) => optional($s->subGrup?->specialtie)->acronym,
-        ];
+        $sortColumn = $this->sortBy['column'];
+        $sortDirection = $this->sortBy['direction'];
 
-        $sortKey = $this->sortBy['column'];
-        $direction = $this->sortBy['direction'];
-
-        if (isset($sortCallbacks[$sortKey])) {
-            $students = $direction === 'asc'
-                ? $students->sortBy($sortCallbacks[$sortKey])
-                : $students->sortByDesc($sortCallbacks[$sortKey]);
+        switch ($sortColumn) {
+            case 'level':
+                $query->join('sub_grups', 'students.sub_grup_id', '=', 'sub_grups.id')
+                    ->join('grups', 'sub_grups.grup_id', '=', 'grups.id')
+                    ->join('levels', 'grups.level_id', '=', 'levels.id')
+                    ->orderBy('levels.name', $sortDirection)
+                    ->select('students.*');
+                break;
+            case 'grup':
+                $query->join('sub_grups', 'students.sub_grup_id', '=', 'sub_grups.id')
+                    ->join('grups', 'sub_grups.grup_id', '=', 'grups.id')
+                    ->orderBy('grups.name', $sortDirection)
+                    ->select('students.*');
+                break;
+            case 'specialtie':
+                $query->join('sub_grups', 'students.sub_grup_id', '=', 'sub_grups.id')
+                    ->join('specialties', 'sub_grups.specialtie_id', '=', 'specialties.id')
+                    ->orderBy('specialties.acronym', $sortDirection)
+                    ->select('students.*');
+                break;
+            case 'first_name':
+            case 'last_name1':
+            case 'last_name2':
+            case 'id_card':
+                $query->orderBy($sortColumn, $sortDirection);
+                break;
+            default:
+                $query->orderBy('id', 'desc');
+                break;
         }
 
-        $currentPage = LengthAwarePaginator::resolveCurrentPage();
-        $items = $students->slice(($currentPage - 1) * $this->perPage)->values();
-
-        return new LengthAwarePaginator($items, $students->count(), $this->perPage, $currentPage);
+        return $query->paginate($this->perPage);
     }
 
     public function deleteConf(Student $student): void
@@ -190,13 +219,38 @@ class Index extends Component
         return $this->subGrups;
     }
 
+    public function store()
+    {
+        $this->validate([
+            'excel' => 'required|file|mimes:xls,xlsx',
+        ]);
+
+        $importer = new ImportStudentsFromExcel();
+        $result = $importer->store_students($this->excel);
+
+        $this->masiveInsert = $result['status'];
+        $this->message = $result['message'];
+        $this->duplicate_students = $result['duplicates'] ?? [];
+
+        $this->excel = null;
+        $this->modalStudentsFormExcel = false;
+    }
+
+    public function closeModal()
+    {
+        $this->message = '';
+        $this->duplicate_students = [];
+        $this->masiveInsert = 0;
+    }
+
+
     public function render()
     {
         $headers = [
-            ['key' => 'last_name1', 'label' => __('Primer Apellido')],
-            ['key' => 'last_name2', 'label' => __('Segundo Apellido')],
-            ['key' => 'name', 'label' => __('Nombre')],
             ['key' => 'id_card', 'label' => __('Cédula')],
+            ['key' => 'last_name1', 'label' => __('1º Apellido')],
+            ['key' => 'last_name2', 'label' => __('2º Apellido')],
+            ['key' => 'name', 'label' => __('Nombre')],
             ['key' => 'level', 'label' => __('Nivel')],
             ['key' => 'grup', 'label' => __('Sección')],
             ['key' => 'specialtie', 'label' => __('Especialidad')],

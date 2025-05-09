@@ -28,31 +28,32 @@ class Index extends Component
 
     public function subjects(): LengthAwarePaginator
     {
-        $subjects = Subject::with('specialtie:id,acronym')
-            ->when($this->search, function ($query) {
-                $query->where('name', 'like', "%{$this->search}%")
-                    ->orWhereHas('specialtie', function ($q) {
-                        $q->where('acronym', 'like', "%{$this->search}%");
-                    });
-            })
-            ->get();
+        $query = Subject::with('specialtie:id,acronym')
+            ->when($this->search, function ($q) {
+                $q->where(function ($q2) {
+                    $q2->where('name', 'like', "%{$this->search}%")
+                        ->orWhereHas('specialtie', fn($q3) => $q3->where('acronym', 'like', "%{$this->search}%"));
+                });
+            });
 
-        $subjects = match ($this->sortBy['column']) {
-            'specialtie.acronym' => $this->sortBy['direction'] === 'asc'
-                ? $subjects->sortBy(fn($item) => optional($item->specialtie)->acronym)
-                : $subjects->sortByDesc(fn($item) => optional($item->specialtie)->acronym),
-            default => $this->sortBy['direction'] === 'asc'
-                ? $subjects->sortBy($this->sortBy['column'])
-                : $subjects->sortByDesc($this->sortBy['column']),
-        };
+        $sortMap = [
+            'specialtie.acronym' => Specialtie::select('acronym')
+                ->whereColumn('specialties.id', 'subjects.specialtie_id')
+                ->limit(1),
+            'name' => 'name',
+            'id'   => 'id',
+        ];
 
-        $currentPage = LengthAwarePaginator::resolveCurrentPage();
-        $paginated = $subjects->slice(($currentPage - 1) * $this->perPage, $this->perPage)->values();
-
-        return new LengthAwarePaginator($paginated, $subjects->count(), $this->perPage, $currentPage);
+        $sortColumn = $this->sortBy['column'] ?? 'id';
+        $sortDirection = $this->sortBy['direction'] ?? 'asc';
+        $sortValue = $sortMap[$sortColumn] ?? 'id';
+        $query->orderBy($sortValue, $sortDirection);
+        
+        return $query->paginate($this->perPage);
     }
 
-    public function store(){
+    public function store()
+    {
         $this->validate();
 
         Subject::create([
@@ -65,14 +66,16 @@ class Index extends Component
         $this->success(__('¡Materia Creada Exitosamnete!'));
     }
 
-    public function edit(Subject $subject){
+    public function edit(Subject $subject)
+    {
         $this->subject = $subject;
         $this->name = $subject->name;
         $this->selectedSpecialtie = $subject->specialtie_id;
         $this->modalEdit = true;
     }
 
-    public function update(){
+    public function update()
+    {
         $this->validate();
 
         $this->subject->name = $this->name;

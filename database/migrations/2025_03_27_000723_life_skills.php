@@ -8,16 +8,16 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('competencias_desarrollo_humanos', function (Blueprint $table) {
+        Schema::create('life_skills', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre');
-            $table->string('descripcion');
+            $table->string('name');
+            $table->string('description');
             $table->timestamps();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('competencias_desarrollo_humanos');
+        Schema::dropIfExists('life_skills');
     }
 };

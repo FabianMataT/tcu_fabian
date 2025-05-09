@@ -21,7 +21,7 @@ class Show extends Component
     public ?Subject $subject = null;
     public ?SubjectsTaughtByTeachers $subjects_taught_by_teachers = null;
     public ?int $teacher_searchable_id = null;
-    public ?int $level_id = 1;
+    public ?int $level_id = 0;
     public array $subgrups = [];
     public ?int $subgrup_id = null;
     public bool $modalCreate, $modalEdit, $modalDeletConf = false;
@@ -189,15 +189,13 @@ class Show extends Component
     public function render()
     {
         $headers = [
-            ['key' => 'teacher', 'label' => 'Materia'],
+            ['key' => 'teacher', 'label' => 'Profesor'],
             ['key' => 'grup', 'label' => 'Grupo'],
             ['key' => 'subgrup', 'label' => 'Subgrupo'],
             ['key' => 'level', 'label' => 'Nivel'],
         ];
 
         $levels =  Level::select('id', 'name')->get();
-
-        $this->loadSubgrups();
         
         return view('livewire.pages.subjects.show', [
             'headers' => $headers,

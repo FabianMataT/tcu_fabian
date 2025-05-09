@@ -171,5 +171,12 @@ class SubGrupsSeeder extends Seeder
             'specialtie_id' => 7,
             'name' => 'B'
         ]);
+
+        SubGrup::create([
+            'grup_id' => 15,
+            'specialtie_id' => 3,
+            'name' => 'A'
+        ]);
+        
     }
 }

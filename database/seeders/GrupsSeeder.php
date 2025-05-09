@@ -74,11 +74,15 @@ class GrupsSeeder extends Seeder
             'level_id' => 3,
             'name' => '3'
         ]);
-
         
         Grup::create([
             'level_id' => 3,
             'name' => '4'
+        ]);
+        
+        Grup::create([
+            'level_id' => 3,
+            'name' => '5'
         ]);
     }
 }

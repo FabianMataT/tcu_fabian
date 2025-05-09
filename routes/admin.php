@@ -12,7 +12,6 @@ use App\Livewire\Pages\Specialties\Show as ShowSpecialties;
 use App\Livewire\Pages\Grups\Index as IndexGrups;
 use App\Livewire\Pages\Grups\Show as ShowGrups;
 
-//estudiantes
 use App\Livewire\Pages\Students\Index as IndexStudents;
 use App\Livewire\Pages\Students\Create as CreateStudents;
 use App\Livewire\Pages\Students\Edit as EditStudents;
@@ -34,6 +33,10 @@ use App\Livewire\Pages\Teachers\Index as IndexTeachers;
 use App\Livewire\Pages\Teachers\Create as CreateTeachers;
 use App\Livewire\Pages\Teachers\Show as ShowTeachers;
 use App\Livewire\Pages\Teachers\Edit as EditTeachers;
+
+use App\Livewire\Pages\LiveSkills\Index as IndexLiveSkills;
+use App\Livewire\Pages\LiveSkills\Create as CreateLiveSkills;
+use App\Livewire\Pages\LiveSkills\Edit as EditLiveSkills;
 
 use App\Livewire\Pages\Roles\Index as IndexRoles;
 use App\Livewire\Pages\Roles\Create as CreateRoles;
@@ -79,7 +82,10 @@ Route::get('/teachers/edit/{teacher}', EditTeachers::class)->name('teachers.edit
 Route::get('/positions', IndexPositions::class)->name('positions.index')->middleware('permission:positions.index'); 
 Route::get('/positions/show/{position}', ShowPositions::class)->name('positions.show')->middleware('permission:positions.show'); 
 
-//aqui las demas
+// Competencias para el desarrollo humano
+Route::get('/live-skills', IndexLiveSkills::class)->name('live.skills.index')->middleware('permission:live.skills.index'); 
+Route::get('/live-skills/create', CreateLiveSkills::class)->name('live.skills.create')->middleware('permission:live.skills.create'); 
+Route::get('/live-skills/edit/{live_skill}', EditLiveSkills::class)->name('live.skills.edit')->middleware('permission:live.skills.edit'); 
 
 // Roles y Permisos
 Route::get('/roles', IndexRoles::class)->name('roles.index')->middleware('permission:roles.index');

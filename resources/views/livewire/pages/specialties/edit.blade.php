@@ -24,7 +24,7 @@
                 <div class="relative w-80 h-52 border-2 border-dashed rounded-xl cursor-pointer overflow-hidden"
                     x-on:click="$refs.fileInput.click()">
                     <template x-if="isUploading">
-                        <div class="absolute inset-0 bg-white bg-opacity-80 z-10 flex items-center justify-center">
+                        <div class="absolute inset-0 bg-white dark:bg-gray-700 bg-opacity-80 z-10 flex items-center justify-center">
                             <svg class="animate-spin h-8 w-8 text-gray-600" xmlns="http://www.w3.org/2000/svg"
                                 fill="none" viewBox="0 0 24 24">
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"

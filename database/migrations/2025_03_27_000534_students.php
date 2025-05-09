@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('students', function (Blueprint $table) {
             $table->id();
             $table->foreignId('sub_grup_id')->constrained('sub_grups')->onDelete('cascade');
-            $table->string('id_card');
+            $table->string('id_card')->unique();
             $table->string('first_name');
             $table->string('middle_name')->default('');
             $table->string('last_name1');

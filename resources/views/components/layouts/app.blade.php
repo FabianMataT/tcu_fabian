@@ -44,9 +44,9 @@ $menuOpciones = [
     ],
     [
         'menu' => 1,
-        'nombre' => 'Competencias de Desarrollo Humano',
+        'nombre' => 'Competencias Humanas',
         'icon' => 'o-server-stack',
-        'ruta' => 'grups.index',
+        'ruta' => 'live.skills.index',
     ],
     [
         'menu' => 2,

@@ -15,7 +15,7 @@ class SpecialtiesSeeder extends Seeder
             'name' => 'Electrónica Industrial',
             'description' => 'La especialidad de Electrónica Industrial se centra en el estudio y la aplicación de sistemas electrónicos en la industria, abarcando el diseño, mantenimiento y optimización de circuitos electrónicos y equipos industriales para mejorar la eficiencia en procesos productivos.',
             'image_path' => '',
-            'slug' => 'electronica'
+            'slug' => 'electronica-industrial'
         ]);
 
         Specialtie::create([
@@ -39,7 +39,7 @@ class SpecialtiesSeeder extends Seeder
             'name' => 'Ejecutivo Comercial y de Servicio al Cliente',
             'description' => 'La especialidad de Ejecutivo Comercial y de Servicio al Cliente se enfoca en el desarrollo de habilidades comerciales y de atención al cliente. Los estudiantes aprenden a gestionar relaciones comerciales, manejar ventas, resolver conflictos y ofrecer un servicio de calidad en diversos sectores.',
             'image_path' => '',
-            'slug' => 'ejecutivo'
+            'slug' => 'ejecutivo-comercial-y-de-servicio-al-cliente',
         ]);
 
         Specialtie::create([
@@ -55,7 +55,7 @@ class SpecialtiesSeeder extends Seeder
             'name' => 'Dibujo y Modelado de Edificaciones',
             'description' => 'Esta especialidad capacita a los estudiantes en la creación de planos y modelos en 3D de edificaciones, aplicando principios de arquitectura y diseño técnico. Se centra en el uso de software especializado y técnicas de representación gráfica para la construcción y remodelación de espacios.',
             'image_path' => '',
-            'slug' => 'dibujo'
+            'slug' => 'dibujo-y-modelo-de-edificaciones'
         ]);
 
         Specialtie::create([
@@ -63,7 +63,7 @@ class SpecialtiesSeeder extends Seeder
             'name' => 'Informática en Desarrollo de Software',
             'description' => 'La especialidad en Informática en Desarrollo de Software prepara a los estudiantes para el diseño, desarrollo y mantenimiento de aplicaciones y sistemas informáticos. Incluye programación, diseño de bases de datos, análisis de sistemas y la creación de soluciones tecnológicas innovadoras.',
             'image_path' => '',
-            'slug' => 'informatica'
+            'slug' => 'informatica-en-desarrollo-de-software'
         ]);
 
         Specialtie::create([
@@ -71,7 +71,7 @@ class SpecialtiesSeeder extends Seeder
             'name' => 'Administración Logística y Distribución',
             'description' => 'Esta especialidad se enfoca en la gestión eficiente de la cadena de suministro, abarcando el transporte, almacenamiento y distribución de productos. Los estudiantes aprenden a planificar, coordinar y optimizar el flujo de mercancías para garantizar la disponibilidad oportuna de productos.',
             'image_path' => '',
-            'slug' => 'logistica'
+            'slug' => 'administracion-logistica-y-distribucion'
         ]);
 
         Specialtie::create([
@@ -79,7 +79,7 @@ class SpecialtiesSeeder extends Seeder
             'name' => 'Configuración y Soporte a Redes de Comunicación y Sistemas Operativos',
             'description' => 'La especialidad en Redes se dedica al diseño, implementación y mantenimiento de redes de comunicación y sistemas operativos, con el fin de asegurar la conectividad y el funcionamiento adecuado de las infraestructuras tecnológicas en empresas y organizaciones.',
             'image_path' => '',
-            'slug' => 'redes'
+            'slug' => 'configuracion-y-soporte-a-redes-de-comunicacion'
         ]);
     }
 }

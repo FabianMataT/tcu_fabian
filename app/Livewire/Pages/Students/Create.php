@@ -22,7 +22,7 @@ class Create extends Component
         'middle_name' => 'nullable|string|max:50',
         'last_name1' => 'required|string|max:50',
         'last_name2' => 'required|string|max:50',
-        'id_card' => 'required|string|max:11',
+        'id_card' => 'required|string|max:11|unique:students,id_card',
         'sub_grup_id' => 'required|exists:sub_grups,id',
     ];
 

@@ -3,13 +3,15 @@
 namespace App\Livewire\Pages\Grups;
 
 use App\Models\Grup;
+use App\Models\User;
 use App\Models\Level;
 use Mary\Traits\Toast;
 use App\Models\SubGrup;
 use Livewire\Component;
 use App\Models\Specialtie;
-use Illuminate\Support\Facades\DB;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class Index extends Component
@@ -23,6 +25,12 @@ class Index extends Component
     public $name, $selectedLevel, $selectedSpecialtieA, $selectedSpecialtieB;
     public ?Grup $grup = null;
     public ?SubGrup $subGrupA, $subGrupB = null;
+    public ?User $user = null;
+
+    public function mount()
+    {
+        $this->user = Auth::user();
+    }
 
     protected $rules = [
         'selectedLevel' => 'required|exists:levels,id',
@@ -33,7 +41,13 @@ class Index extends Component
 
     public function grups(): LengthAwarePaginator
     {
-        $grups = Grup::with(['level:id,name', 'specialtiesXGrup:specialties.id,acronym'])
+        $grups = Grup::with(['level:id,name', 'specialtiesXGrup:specialties.id,acronym', 'subGrup:id', 'subGrup:subjects_taught_by_teacher.id,teacher_id'])
+            ->when(
+                in_array($this->user->teacher->position->name, ['Profesor Académico', 'Profesor Técnico']),
+                fn($q) => $q->whereHas('subGrup.subjects_taught_by_teacher', function ($query) {
+                    $query->where('teacher_id', $this->user->teacher->id);
+                })
+            )
             ->when($this->search, function ($query) {
                 $query->where(function ($q) {
                     $q->where('name', 'like', "%{$this->search}%")

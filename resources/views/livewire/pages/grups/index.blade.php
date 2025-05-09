@@ -5,14 +5,17 @@
                 <x-mary-input wire:model.live.debounce="search" icon="o-magnifying-glass"
                     placeholder="{{ __('Buscar...') }}" class="text-gray-900 dark:text-gray-200" />
             </x-slot:middle>
-            @haspermission('grups.create')
-                <x-slot:actions>
+            <x-slot:actions>
+                @haspermission('grups.create')
                     <x-mary-button icon="o-plus" class="btn-primary" @click="$wire.modalCreate = true" />
+                @endhaspermission
+                @haspermission('grups.edit')
                     <x-mary-dropdown icon="o-cube-transparent" class="bg-teal-400 dark:bg-stone-500" right>
-                        <x-mary-menu-item title="Subir de nivel" icon="o-chevron-double-up" @click="$wire.modalLevelUp = true" />
+                        <x-mary-menu-item title="Subir de nivel" icon="o-chevron-double-up"
+                            @click="$wire.modalLevelUp = true" />
                     </x-mary-dropdown>
-                </x-slot:actions>
-            @endhaspermission
+                @endhaspermission
+            </x-slot:actions>
         </x-mary-header>
 
         <x-mary-card shadow separator>
@@ -126,7 +129,8 @@
             <p>{{ __('Una vez se elimine un grupo, se eliminaran todos los datos asociados al mismo') }}</p>
         </div>
         <div class="flex flex-row items-center justify-end gap-4">
-            <x-mary-button label="Cancelar" @click="$wire.modalDeletConf = false" class="btn btn-cancel text-white" />
+            <x-mary-button label="Cancelar" @click="$wire.modalDeletConf = false"
+                class="btn btn-cancel text-white" />
             <x-mary-button wire:click="destroy()" label="{{ __('Elinminar') }}" class="btn btn-error text-white" />
         </div>
     </x-mary-modal>
@@ -138,11 +142,12 @@
                 {{ __('Al subir el nivel de los grupos, aquellos cuyo nivel actual sea "exestudiante" serán ') }}
                 <strong>{{ __('Eliminados') }}</strong>
                 {{ __('. Esto también eliminará a los estudiantes pertenecientes a esos grupos y todos sus datos asociados. Los demás grupos simplemente avanzarán al siguiente nivel y no serán eliminados.') }}
-            </p>            
+            </p>
         </div>
         <div class="flex flex-row items-center justify-end gap-4">
             <x-mary-button label="Cancelar" @click="$wire.modalLevelUp = false" class="btn btn-cancel text-white" />
-            <x-mary-button wire:click="levelUp()" label="{{ __('Subir de nivel') }}" class="btn btn-primary text-white" />
+            <x-mary-button wire:click="levelUp()" label="{{ __('Subir de nivel') }}"
+                class="btn btn-primary text-white" />
         </div>
     </x-mary-modal>
 </div>

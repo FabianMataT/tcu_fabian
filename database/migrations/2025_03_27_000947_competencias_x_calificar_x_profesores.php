@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('competencias_x_calificar_x_profesores', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('materia_impartida_x_profesorID')->constrained('materias_impartidas_x_profesores')->onDelete('cascade')->name('fk_competencia_materia');
+            $table->foreignId('subjects_taugh_by_teacher_id')->constrained('subjects_taugh_by_teachers')->onDelete('cascade')->name('fk_teacher_subject_competency');
             $table->timestamps();
         });
     }
