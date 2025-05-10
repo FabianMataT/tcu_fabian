@@ -1,11 +1,12 @@
 <div>
-    <x-mary-card title="{{ __('Registrar un nuevo rol') }}" subtitle="{{ __('Reñene todos los campos para registrar un nuevo rol') }}" shadow separator
+    <x-mary-card title="{{ __('Registrar un nuevo rol') }}"
+        subtitle="{{ __('Reñene todos los campos para registrar un nuevo rol') }}" shadow separator
         class="border-gray-200 border-2 dark:border-gray-800 dark:bg-gray-800 ">
 
         <x-mary-form wire:submit="store" class="space-y-6">
-
-            <x-mary-errors title="{{ __('Parece que hay algunos errores') }}" 
-                icon="o-exclamation-triangle" class="bg-red-500 text-white rounded-md p-4" />
+            @csrf
+            <x-mary-errors title="{{ __('Parece que hay algunos errores') }}" icon="o-exclamation-triangle"
+                class="bg-red-500 text-white rounded-md p-4" />
 
             <x-mary-input label="{{ __('Nombre del rol') }}" wire:model="role_name" class="w-full" />
 

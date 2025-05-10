@@ -3,7 +3,7 @@
         subtitle="{{ __('Reñene todos los campos para actualizar al estudiante') }}"
         shadow separator class="border-gray-200 border-2 dark:border-gray-800 dark:bg-gray-800">
         <x-mary-form wire:submit="update" class="space-y-6">
-
+            @csrf
             <x-mary-errors title="{{ __('Parece que hay algunos errores') }}" icon="o-exclamation-triangle"
                 class="bg-red-500 text-white rounded-md p-4" />
 

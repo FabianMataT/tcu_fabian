@@ -57,6 +57,7 @@
     <x-mary-modal wire:model="modalCreate" title="Agregar una materia"
         subtitle="Reñene todos los campos para poder agregar una nueva materia" separator>
         <x-mary-form wire:submit="store">
+            @csrf
             <x-mary-errors title="{{ __('Parece que hay algunos errores') }}" icon="o-exclamation-triangle"
                 class="bg-red-500 text-white rounded-md p-4" />
 
@@ -75,6 +76,7 @@
     <x-mary-modal wire:model="modalEdit" title="Actualizar una materia"
         subtitle="Reñene todos los campos para poder editar la materia" separator>
         <x-mary-form wire:submit="update">
+            @csrf
             <x-mary-errors title="{{ __('Parece que hay algunos errores') }}" icon="o-exclamation-triangle"
                 class="bg-red-500 text-white rounded-md p-4" />
 

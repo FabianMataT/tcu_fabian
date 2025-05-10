@@ -78,6 +78,7 @@
     <x-mary-modal wire:model="modalCreate" title="Agregar un grupo"
         subtitle="Reñene todos los campos para poder agregar un nuevo grupo" separator>
         <x-mary-form wire:submit="store">
+            @csrf
             <x-mary-errors title="{{ __('Parece que hay algunos errores') }}" icon="o-exclamation-triangle"
                 class="bg-red-500 text-white rounded-md p-4" />
 
@@ -102,6 +103,7 @@
     <x-mary-modal wire:model="modalEdit" title="Actualizar un grupo"
         subtitle="Reñene todos los campos para poder editar el grupo" separator>
         <x-mary-form wire:submit="update">
+            @csrf
             <x-mary-errors title="{{ __('Parece que hay algunos errores') }}" icon="o-exclamation-triangle"
                 class="bg-red-500 text-white rounded-md p-4" />
 

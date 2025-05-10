@@ -1,82 +1,81 @@
 <?php
-$menuOpciones = [
-    [
-        'menu' => 1,
-        'nombre' => 'Inicio',
-        'icon' => 'o-home',
-        'ruta' => 'dashboard',
-    ],
-    [
-        'menu' => 1,
-        'nombre' => 'Especialidades',
-        'icon' => 'o-clipboard-document-list',
-        'ruta' => 'specialties.index',
-    ],
-    [
-        'menu' => 1,
-        'nombre' => 'Grupos',
-        'icon' => 'o-server-stack',
-        'ruta' => 'grups.index',
-    ],
-    [
-        'menu' => 1,
-        'nombre' => 'Estudiantes',
-        'icon' => 'o-users',
-        'ruta' => 'students.index',
-    ],
-    [
-        'menu' => 1,
-        'nombre' => 'Materias',
-        'icon' => 'o-server-stack',
-        'ruta' => 'subjects.menu',
-    ],
-    [
-        'menu' => 1,
-        'nombre' => 'Profesores',
-        'icon' => 'o-server-stack',
-        'ruta' => 'teachers.index',
-    ],
-    [
-        'menu' => 1,
-        'nombre' => 'Puestos',
-        'icon' => 'o-server-stack',
-        'ruta' => 'positions.index',
-    ],
-    [
-        'menu' => 1,
-        'nombre' => 'Competencias Humanas',
-        'icon' => 'o-server-stack',
-        'ruta' => 'live.skills.index',
-    ],
-    [
-        'menu' => 2,
-        'nombre' => 'Competencias de Estudiantes a Calificar',
-        'icon' => 'o-clipboard-document-list',
-        'items' => [
-            [
-                'menuItemNombre' => 'Grupos',
-                'menuItemIcon' => 'o-clipboard-document-list',
-                'menuItemRuta' => 'specialties.index',
-            ],
-            [
-                'menuItemNombre' => 'Otra Opción',
-                'menuItemIcon' => 'o-clipboard-document',
-                'menuItemRuta' => 'specialties.index',
+    $menuOpciones = [
+        [
+            'menu' => 1,
+            'nombre' => 'Inicio',
+            'icon' => 'o-home',
+            'ruta' => 'dashboard',
+        ],
+        [
+            'menu' => 1,
+            'nombre' => 'Especialidades',
+            'icon' => 'o-newspaper',
+            'ruta' => 'specialties.index',
+        ],
+        [
+            'menu' => 1,
+            'nombre' => 'Grupos',
+            'icon' => 'o-server-stack',
+            'ruta' => 'grups.index',
+        ],
+        [
+            'menu' => 1,
+            'nombre' => 'Estudiantes',
+            'icon' => 'o-user-group',
+            'ruta' => 'students.index',
+        ],
+        [
+            'menu' => 1,
+            'nombre' => 'Materias',
+            'icon' => 'o-rectangle-stack',
+            'ruta' => 'subjects.menu',
+        ],
+        [
+            'menu' => 1,
+            'nombre' => 'Profesores',
+            'icon' => 'o-users',
+            'ruta' => 'teachers.index',
+        ],
+        [
+            'menu' => 1,
+            'nombre' => 'Puestos',
+            'icon' => 'o-identification',
+            'ruta' => 'positions.index',
+        ],
+        [
+            'menu' => 1,
+            'nombre' => 'Competencias Humanas',
+            'icon' => 'o-globe-americas',
+            'ruta' => 'life.skills.index',
+        ],
+        [
+            'menu' => 2,
+            'nombre' => 'Competencias de Estudiantes a Calificar',
+            'icon' => 'o-clipboard-document-list',
+            'items' => [
+                [
+                    'menuItemNombre' => 'Grupos',
+                    'menuItemIcon' => 'o-clipboard-document-list',
+                    'menuItemRuta' => 'specialties.index',
+                ],
+                [
+                    'menuItemNombre' => 'Otra Opción',
+                    'menuItemIcon' => 'o-clipboard-document',
+                    'menuItemRuta' => 'specialties.index',
+                ],
             ],
         ],
-    ],
-    [
-        'menu' => 1,
-        'nombre' => 'Roles y Permisos',
-        'icon' => 'o-cog',
-        'ruta' => 'roles.index',
-    ],
-];
+        [
+            'menu' => 1,
+            'nombre' => 'Roles y Permisos',
+            'icon' => 'o-cog',
+            'ruta' => 'roles.index',
+        ],
+    ];
 ?>
 
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-theme="winter">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">

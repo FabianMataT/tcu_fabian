@@ -22,7 +22,7 @@ class RolesPermisosSeeder extends Seeder
         Permission::create(['name' => 'subjects.menu', 'description' => 'Materias', 'module_id' => 1])->syncRoles([$role1, $role2, $role3]);
         Permission::create(['name' => 'teachers.index', 'description' => 'Profesores', 'module_id' => 1])->syncRoles([$role1, $role2]);
         Permission::create(['name' => 'positions.index', 'description' => 'Puestos', 'module_id' => 1])->syncRoles([$role1, $role2]);
-        Permission::create(['name' => 'live.skills.index', 'description' => 'Competencias para el desarrollo humano', 'module_id' => 1])->syncRoles([$role1, $role2, $role3]);
+        Permission::create(['name' => 'life.skills.index', 'description' => 'Competencias para el desarrollo humano', 'module_id' => 1])->syncRoles([$role1, $role2, $role3]);
         Permission::create(['name' => 'roles.index', 'description' => 'Roles y Permisos', 'module_id' => 1])->syncRoles([$role1, $role2]);
 
         //Especialidades
@@ -76,7 +76,8 @@ class RolesPermisosSeeder extends Seeder
         Permission::create(['name' => 'teachers.delete', 'description' => 'Eliminar profesores', 'module_id' => 8])->syncRoles([$role1]);
 
         //Competencias para el desarrollo humano
-        Permission::create(['name' => 'live.skills.create', 'description' => 'Create competencias para el desarrollo humanor', 'module_id' => 9])->syncRoles([$role1, $role2]);
-        Permission::create(['name' => 'live.skills.edit', 'description' => 'Editar competencias para el desarrollo humanor', 'module_id' => 9])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'life.skills.create', 'description' => 'Create competencias para el desarrollo humanor', 'module_id' => 9])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'life.skills.edit', 'description' => 'Editar competencias para el desarrollo humanor', 'module_id' => 9])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'life.skills.delete', 'description' => 'Eliminar competencias para el desarrollo humanor', 'module_id' => 9])->syncRoles([$role1, $role2]);
     }
 }

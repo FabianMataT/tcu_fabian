@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use App\Models\LifeSkill;
 use Illuminate\Database\Seeder;
 
-class LiveSkillsSeeder extends Seeder
+class LifeSkillsSeeder extends Seeder
 {
     public function run(): void
     {
