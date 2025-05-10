@@ -13,9 +13,7 @@ use App\Models\Specialtie;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Actions\Student\ImportStudentsFromExcel;
 
@@ -219,6 +217,7 @@ class Index extends Component
         return $this->subGrups;
     }
 
+    // Store all the students coming from the excel
     public function store()
     {
         $this->validate([

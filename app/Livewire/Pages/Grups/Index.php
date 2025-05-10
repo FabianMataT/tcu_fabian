@@ -24,7 +24,8 @@ class Index extends Component
     public string $search = '';
     public $name, $selectedLevel, $selectedSpecialtieA, $selectedSpecialtieB;
     public ?Grup $grup = null;
-    public ?SubGrup $subGrupA, $subGrupB = null;
+    public ?SubGrup $subGrupA = null;
+    public ?SubGrup $subGrupB = null;
     public ?User $user = null;
 
     public function mount()
@@ -128,7 +129,7 @@ class Index extends Component
         $this->validate();
 
         if (!$this->grup) {
-            $this->error(__('Grupo no encontrado.'));
+            $this->error('Grupo no encontrado.');
             return;
         }
 
@@ -139,18 +140,23 @@ class Index extends Component
                 'name' => $this->name,
             ]);
 
-            if ($this->subGrupA && $this->subGrupB) {
-                $this->subGrupA->update(['specialtie_id' => $this->selectedSpecialtieA]);
-                $this->subGrupB->update(['specialtie_id' => $this->selectedSpecialtieB]);
-            } elseif ($this->selectedSpecialtieB) {
-                $this->subGrupA->update(['specialtie_id' => $this->selectedSpecialtieA]);
-                SubGrup::create([
-                    'grup_id' => $this->grup->id,
-                    'specialtie_id' => $this->selectedSpecialtieB,
-                    'name' => 'B',
-                ]);
-            } else {
-                $this->subGrupA->update(['specialtie_id' => $this->selectedSpecialtieA]);
+            $subgrups = [
+                'A' => ['instance' => $this->subGrupA, 'specialtie' => $this->selectedSpecialtieA],
+                'B' => ['instance' => $this->subGrupB, 'specialtie' => $this->selectedSpecialtieB],
+            ];
+
+            foreach ($subgrups as $name => $data) {
+                if ($data['instance']) {
+                    if ($data['specialtie']) {
+                        $data['instance']->update(['specialtie_id' => $data['specialtie']]);
+                    }
+                } elseif ($data['specialtie']) {
+                    SubGrup::create([
+                        'grup_id' => $this->grup->id,
+                        'specialtie_id' => $data['specialtie'],
+                        'name' => $name,
+                    ]);
+                }
             }
             DB::commit();
             $this->reset(['modalEdit', 'name', 'selectedLevel', 'selectedSpecialtieA', 'selectedSpecialtieB', 'grup']);

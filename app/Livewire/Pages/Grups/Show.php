@@ -3,6 +3,7 @@
 namespace App\Livewire\Pages\Grups;
 
 use App\Models\Grup;
+use App\Models\Level;
 use Mary\Traits\Toast;
 use App\Models\Student;
 use App\Models\SubGrup;
@@ -10,6 +11,7 @@ use Livewire\Component;
 use App\Models\Specialtie;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Actions\Student\ImportStudentsFromExcel;
 
@@ -17,7 +19,7 @@ class Show extends Component
 {
     use WithPagination, Toast, WithFileUploads;
 
-    public bool $modalDeletConf, $modalStudentsFormExcel = false;
+    public bool $modalDeletConf, $modalStudentsFormExcel, $modalChangeSubgrups = false;
     public $perPage = 10;
     public array $sortBy = ['column' => 'id_card', 'direction' => 'asc'];
     public string $search = '';
@@ -26,6 +28,17 @@ class Show extends Component
     public $excel, $message;
     public array $duplicate_students = [];
     public int $masiveInsert = 0;
+    public int $changeSubgrups = 0;
+    public int $subgrup_id, $level_id, $grup_id;
+    public string $subgrup_name;
+    public ?Collection $subgrups, $levels, $grups = null;
+
+    public function mount()
+    {
+        $this->subgrups = collect();
+        $this->levels = collect();
+        $this->grups = collect();
+    }
 
     public function students(): LengthAwarePaginator
     {
@@ -78,7 +91,6 @@ class Show extends Component
         return $query->paginate($this->perPage);
     }
 
-
     public function deleteConf(Student $student): void
     {
         $this->student = $student;
@@ -97,6 +109,7 @@ class Show extends Component
         $this->student = null;
     }
 
+    // Store in the current group all the students coming from the excel
     public function store()
     {
         $this->validate([
@@ -120,7 +133,72 @@ class Show extends Component
         $this->duplicate_students = [];
         $this->masiveInsert = 0;
     }
-    
+
+    // Moves a student subgroup to a different group and renames it to "A" or "B".
+    // If a subgroup with that name already exists in the target group, it is renamed to "Antiguo-A" or "Antiguo-B".
+    // If a subgroup with the "Old" name already exists, the process is halted to avoid duplicates.
+    public function update()
+    {
+        $this->validate([
+            'subgrup_id' => 'required|exists:sub_grups,id',
+            'level_id' => 'nullable|exists:levels,id',
+            'grup_id' => 'required|exists:grups,id',
+            'subgrup_name' => 'required|string|in:A,B',
+        ]);
+
+        $subgrup_to_change = SubGrup::find($this->subgrup_id);
+        $existing_subgrup = SubGrup::where('grup_id', $this->grup_id)->where('name', $this->subgrup_name)->first();
+
+        $antiguo_name = $this->subgrup_name.'-Antiguo';
+        $antiguo_exists = SubGrup::where('grup_id', $this->grup_id)->where('name', $antiguo_name)->exists();
+
+        if ($antiguo_exists) {
+            $this->masiveInsert = 2;
+           $this->message = "Ya existe un subgrupo ({$this->subgrup_name}) y un subgrupo ({$antiguo_name}) en el grupo de destino. Para poder trasladar a los estudiantes, primero debes mover el subgrupo ({$antiguo_name}) a otro grupo. Luego podrás completar el traslado intentándolo nuevamente.";
+            $this->modalChangeSubgrups = false;
+            return true;
+        }
+
+        if ($existing_subgrup) {
+            $existing_subgrup->name = $antiguo_name;
+            $existing_subgrup->save();
+        }
+
+        $subgrup_to_change->grup_id = $this->grup_id;
+        $subgrup_to_change->name = $this->subgrup_name;
+        $subgrup_to_change->save();
+
+        $this->subgrup_id = 0;
+        $this->grup_id = 0;
+        $this->level_id = 0;
+        $this->masiveInsert = 1;
+        $this->message = "Los estudiantes del subgrupo ({$this->subgrup_name}) han sido transladados de forma exitosa";
+        $this->modalChangeSubgrups = false;
+    }
+
+    public function ChangeSubgrups()
+    {
+        if ($this->changeSubgrups == 0) {
+            $this->levels = Level::select('id', 'name')->get();
+            $this->subgrups = SubGrup::with('specialtie:id,acronym')
+                ->select('id', 'specialtie_id', 'grup_id', 'name')
+                ->where('grup_id', $this->grup->id)
+                ->get()
+                ->map(function ($subgrups) {
+                    $subgrups->name = $subgrups->name . ' - ' . ($subgrups->specialtie->acronym ?? '');
+                    return $subgrups;
+                });
+        } else {
+            dd('ya se cargo, relax');
+        }
+    }
+
+    public function loadGrups()
+    {
+        $this->grups = Grup::select('id', 'name')->where('level_id', $this->level_id)->get();
+        return $this->grups;
+    }
+
     public function render()
     {
         $headers = [
