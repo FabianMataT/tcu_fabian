@@ -95,6 +95,9 @@
                 @scope('cell_specialtie', $student)
                     <p class="text-sm font-medium">{{ $student->subGrup->specialtie->acronym }}</p>
                 @endscope
+                @scope('cell_student_life_skill_score_score', $student)
+                    <p>{{ number_format($student->student_life_skill_score_score, 0) }}</p>
+                @endscope
                 @scope('actions', $student)
                     <div class="flex gap-4 p-2">
                         @haspermission('students.show')
@@ -173,7 +176,7 @@
                         </div>
                     @elseif ($masiveInsert == 2)
                         <div class="absolute inset-0 bg-white dark:bg-gray-700 bg-opacity-80 z-10 flex items-center justify-center"
-                            x-on:load="isUploading = false">
+                            wire:click="$set('masiveInsert', null); isUploading = false;" x-on:click.stop>
                             <x-mary-alert title="Hubo un error, haz clic aquí para subir un archivo Excel"
                                 icon="o-x-circle" class="alert-error alert-outline" />
                         </div>

@@ -1,7 +1,7 @@
 <?php
 
-use App\Livewire\Pages\Home;
 use Illuminate\Support\Facades\Route;
+use App\Livewire\Pages\Home;
 
 
 Route::get('/', function () {
@@ -9,3 +9,7 @@ Route::get('/', function () {
 });
 
 
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])->group(function () {
+
+    Route::get('/dashboard', Home::class)->name('dashboard');
+});

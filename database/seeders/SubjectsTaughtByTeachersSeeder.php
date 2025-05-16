@@ -57,5 +57,17 @@ class SubjectsTaughtByTeachersSeeder extends Seeder
             'sub_grup_id' => 2,
             'subject_id' => 10,
         ]);
+
+        SubjectsTaughtByTeachers::create([
+            'teacher_id' => 3,
+            'sub_grup_id' => 15,
+            'subject_id' => 21,
+        ]);
+        
+        SubjectsTaughtByTeachers::create([
+            'teacher_id' => 4,
+            'sub_grup_id' => 15,
+            'subject_id' => 22,
+        ]);
     }
 }

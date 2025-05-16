@@ -20,4 +20,8 @@ class Subject extends Model
     {
         return $this->hasMany(SubjectsTaughtByTeachers::class, 'subject_id');
     }
+
+    public function studentLifeSkillSubjectPeriodScore(){
+        return $this->hasMany(StudentLifeSkillSubjectPeriodScore::class, 'subject_id');
+    }
 }

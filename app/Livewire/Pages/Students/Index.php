@@ -41,15 +41,16 @@ class Index extends Component
     public ?int $level_id = null;
     public ?int $grup_id = null;
     public ?int $sub_grup_id = null;
-    public ?int $selectebleFiltersOptionsloaded = null;
-    public int $activeFiltersCount = 0;
+    public ?float $min_life_skill_score = null;
+    public ?float $max_life_skill_score = null;
+    public ?int $filtersOptionsLoaded = null;
     public int $masiveInsert = 0;
 
 
     public function mount()
     {
         $this->user = Auth::user();
-        $this->selectebleFiltersOptionsloaded = 0;
+        $this->filtersOptionsLoaded = 0;
         $this->specialties = collect();
         $this->levels = collect();
         $this->grups = collect();
@@ -59,13 +60,14 @@ class Index extends Component
     public function students(): LengthAwarePaginator
     {
         $query = Student::query()
+            ->withAggregate('studentLifeSkillScore', 'score')
             ->with([
                 'subGrup:id,grup_id,specialtie_id,name',
                 'subGrup.specialtie:id,acronym',
                 'subGrup.grup.level:id,name',
             ])
             ->when(
-                in_array($this->user->teacher->position->name, ['Profesor Académico', 'Profesor Técnico']),
+                $this->user?->teacher?->first_name,
                 fn($q) => $q->whereHas('subGrup.subjects_taught_by_teacher', function ($query) {
                     $query->where('teacher_id', $this->user->teacher->id);
                 })
@@ -79,6 +81,8 @@ class Index extends Component
             ->when($this->level_id, fn($q) => $q->whereHas('subGrup.grup.level', fn($q2) => $q2->where('id', $this->level_id)))
             ->when($this->grup_id, fn($q) => $q->whereHas('subGrup.grup', fn($q2) => $q2->where('id', $this->grup_id)))
             ->when($this->sub_grup_id, fn($q) => $q->where('sub_grup_id', $this->sub_grup_id))
+            ->when($this->min_life_skill_score !== null, fn($q) => $q->having('student_life_skill_score_score', '>=', $this->min_life_skill_score))
+            ->when($this->max_life_skill_score !== null, fn($q) => $q->having('student_life_skill_score_score', '<=', $this->max_life_skill_score))
             ->when($this->search, function ($q) {
                 $q->where(function ($sub) {
                     $sub->where('first_name', 'like', "%{$this->search}%")
@@ -101,17 +105,8 @@ class Index extends Component
                     ->orderBy('levels.name', $sortDirection)
                     ->select('students.*');
                 break;
-            case 'grup':
-                $query->join('sub_grups', 'students.sub_grup_id', '=', 'sub_grups.id')
-                    ->join('grups', 'sub_grups.grup_id', '=', 'grups.id')
-                    ->orderBy('grups.name', $sortDirection)
-                    ->select('students.*');
-                break;
-            case 'specialtie':
-                $query->join('sub_grups', 'students.sub_grup_id', '=', 'sub_grups.id')
-                    ->join('specialties', 'sub_grups.specialtie_id', '=', 'specialties.id')
-                    ->orderBy('specialties.acronym', $sortDirection)
-                    ->select('students.*');
+            case 'student_life_skill_score_score':
+                $query->orderBy('student_life_skill_score_score', $sortDirection);
                 break;
             case 'first_name':
             case 'last_name1':
@@ -145,13 +140,6 @@ class Index extends Component
         $this->student = null;
     }
 
-    public function applyFilters()
-    {
-        $this->resetPage();
-        $this->modalFilters = false;
-        $this->updateActiveFiltersCount();
-    }
-
     public function clearFilters()
     {
         $this->reset([
@@ -160,6 +148,8 @@ class Index extends Component
             'last_name1',
             'last_name2',
             'id_card',
+            'min_life_skill_score',
+            'max_life_skill_score',
             'specialtie_id',
             'level_id',
             'grup_id',
@@ -169,33 +159,17 @@ class Index extends Component
 
         $this->resetPage();
         $this->modalFilters = false;
-        $this->updateActiveFiltersCount();
     }
 
-    public function selectebleFiltersOptions()
+    public function loadFilters()
     {
-        if ($this->selectebleFiltersOptionsloaded == 0) {
-            $this->selectebleFiltersOptionsloaded = 1;
+        if ($this->filtersOptionsLoaded == 0) {
+            $this->filtersOptionsLoaded = 1;
             $this->specialties = Specialtie::select('id', 'acronym')->get();
             $this->levels = Level::select('id', 'name')->get();
             $this->loadGrups();
             $this->loadSubGrups();
         }
-    }
-
-    public function updateActiveFiltersCount()
-    {
-        $this->activeFiltersCount = collect([
-            $this->first_name,
-            $this->middle_name,
-            $this->last_name1,
-            $this->last_name2,
-            $this->id_card,
-            $this->specialtie_id,
-            $this->level_id,
-            $this->grup_id,
-            $this->sub_grup_id,
-        ])->filter(fn($value) => !is_null($value) && $value !== '')->count();
     }
 
     public function loadGrups()
@@ -251,8 +225,9 @@ class Index extends Component
             ['key' => 'last_name2', 'label' => __('2º Apellido')],
             ['key' => 'name', 'label' => __('Nombre')],
             ['key' => 'level', 'label' => __('Nivel')],
-            ['key' => 'grup', 'label' => __('Sección')],
-            ['key' => 'specialtie', 'label' => __('Especialidad')],
+            ['key' => 'grup', 'label' => __('Sección'), 'sortable' => false],
+            ['key' => 'specialtie', 'label' => __('Especialidad'), 'sortable' => false],
+            ['key' => 'student_life_skill_score_score', 'label' => __('Calificación')]
         ];
 
         return view('livewire.pages.students.index', [

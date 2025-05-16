@@ -45,7 +45,9 @@ class Show extends Component
         $query = Student::with([
             'subGrup:id,grup_id,specialtie_id,name',
             'subGrup.specialtie:id,acronym'
-        ])->whereHas('subGrup', fn($q) => $q->where('grup_id', $this->grup->id))
+        ])
+            ->withAggregate('studentLifeSkillScore', 'score')
+            ->whereHas('subGrup', fn($q) => $q->where('grup_id', $this->grup->id))
             ->when($this->search, function ($query) {
                 $query->where(function ($q) {
                     $q->where('first_name', 'like', "%{$this->search}%")
@@ -76,6 +78,9 @@ class Show extends Component
                         ->limit(1),
                     $sortDirection
                 );
+                break;
+            case 'student_life_skill_score_score':
+                $query->orderBy('student_life_skill_score_score', $sortDirection);
                 break;
             case 'id_card':
             case 'name':
@@ -149,12 +154,12 @@ class Show extends Component
         $subgrup_to_change = SubGrup::find($this->subgrup_id);
         $existing_subgrup = SubGrup::where('grup_id', $this->grup_id)->where('name', $this->subgrup_name)->first();
 
-        $antiguo_name = $this->subgrup_name.'-Antiguo';
+        $antiguo_name = $this->subgrup_name . '-Antiguo';
         $antiguo_exists = SubGrup::where('grup_id', $this->grup_id)->where('name', $antiguo_name)->exists();
 
         if ($antiguo_exists) {
             $this->masiveInsert = 2;
-           $this->message = "Ya existe un subgrupo ({$this->subgrup_name}) y un subgrupo ({$antiguo_name}) en el grupo de destino. Para poder trasladar a los estudiantes, primero debes mover el subgrupo ({$antiguo_name}) a otro grupo. Luego podrás completar el traslado intentándolo nuevamente.";
+            $this->message = "Ya existe un subgrupo ({$this->subgrup_name}) y un subgrupo ({$antiguo_name}) en el grupo de destino. Para poder trasladar a los estudiantes, primero debes mover el subgrupo ({$antiguo_name}) a otro grupo. Luego podrás completar el traslado intentándolo nuevamente.";
             $this->modalChangeSubgrups = false;
             return true;
         }
@@ -208,6 +213,7 @@ class Show extends Component
             ['key' => 'name', 'label' => __('Nombre')],
             ['key' => 'subgrup', 'label' => __('Subgrupo')],
             ['key' => 'specialtie', 'label' => __('Especialidad')],
+            ['key' => 'student_life_skill_score_score', 'label' => __('Calificación')]
         ];
 
         return view('livewire.pages.grups.show', [

@@ -29,13 +29,9 @@ class SubjectsTaughtByTeachers extends Model
         return $this->belongsTo(Subject::class, 'subject_id');
     }
 
-    public function competencias_x_calificar_x_profesor()
+    public function teacherLifeSkillsToAssess()
     {
-        return $this->belongsToMany(Competencias_x_calificar_x_profesor::class, 'materia_impartida_x_profesorID');
+        return $this->hasMany(TeacherLifeSkillsToAsses::class, 'subjects_taught_by_teacher_id');
     }
 
-    public function calificacion_competencias_x_periodo_materias_x_estudiante()
-    {
-        return $this->hasMany(Calificacion_competencias_x_periodo_materias_x_estudiante::class, 'materia_impartida_x_profesorID');
-    }
 }

@@ -8,15 +8,16 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('estudiantes_a_calificar_competencias', function (Blueprint $table) {
+        Schema::create('student_life_skill_scores', function (Blueprint $table) {
             $table->id();
             $table->foreignId('student_id')->constrained('students')->onDelete('cascade');
+            $table->double('score', 3, 2);
             $table->timestamps();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('estudiantes_a_calificar_competencias');
+        Schema::dropIfExists('student_life_skill_scores');
     }
 };

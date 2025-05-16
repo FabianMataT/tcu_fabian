@@ -1,81 +1,71 @@
 <?php
-    $menuOpciones = [
-        [
-            'menu' => 1,
-            'nombre' => 'Inicio',
-            'icon' => 'o-home',
-            'ruta' => 'dashboard',
-        ],
-        [
-            'menu' => 1,
-            'nombre' => 'Especialidades',
-            'icon' => 'o-newspaper',
-            'ruta' => 'specialties.index',
-        ],
-        [
-            'menu' => 1,
-            'nombre' => 'Grupos',
-            'icon' => 'o-server-stack',
-            'ruta' => 'grups.index',
-        ],
-        [
-            'menu' => 1,
-            'nombre' => 'Estudiantes',
-            'icon' => 'o-user-group',
-            'ruta' => 'students.index',
-        ],
-        [
-            'menu' => 1,
-            'nombre' => 'Materias',
-            'icon' => 'o-rectangle-stack',
-            'ruta' => 'subjects.menu',
-        ],
-        [
-            'menu' => 1,
-            'nombre' => 'Profesores',
-            'icon' => 'o-users',
-            'ruta' => 'teachers.index',
-        ],
-        [
-            'menu' => 1,
-            'nombre' => 'Puestos',
-            'icon' => 'o-identification',
-            'ruta' => 'positions.index',
-        ],
-        [
-            'menu' => 1,
-            'nombre' => 'Competencias Humanas',
-            'icon' => 'o-globe-americas',
-            'ruta' => 'life.skills.index',
-        ],
-        [
-            'menu' => 2,
-            'nombre' => 'Competencias de Estudiantes a Calificar',
-            'icon' => 'o-clipboard-document-list',
-            'items' => [
-                [
-                    'menuItemNombre' => 'Grupos',
-                    'menuItemIcon' => 'o-clipboard-document-list',
-                    'menuItemRuta' => 'specialties.index',
-                ],
-                [
-                    'menuItemNombre' => 'Otra Opción',
-                    'menuItemIcon' => 'o-clipboard-document',
-                    'menuItemRuta' => 'specialties.index',
-                ],
-            ],
-        ],
-        [
-            'menu' => 1,
-            'nombre' => 'Roles y Permisos',
-            'icon' => 'o-cog',
-            'ruta' => 'roles.index',
-        ],
-    ];
+$menuOptions = [
+    [
+        'menu' => 1,
+        'name' => 'Inicio',
+        'icon' => 'o-home',
+        'route' => 'dashboard',
+    ],
+    [
+        'menu' => 1,
+        'name' => 'Especialidades',
+        'icon' => 'o-newspaper',
+        'route' => 'specialties.index',
+    ],
+    [
+        'menu' => 1,
+        'name' => 'Grupos',
+        'icon' => 'o-server-stack',
+        'route' => 'grups.index',
+    ],
+    [
+        'menu' => 1,
+        'name' => 'Estudiantes',
+        'icon' => 'o-user-group',
+        'route' => 'students.index',
+    ],
+    [
+        'menu' => 1,
+        'name' => 'Materias',
+        'icon' => 'o-rectangle-stack',
+        'route' => 'subjects.menu',
+    ],
+    [
+        'menu' => 1,
+        'name' => 'Profesores',
+        'icon' => 'o-users',
+        'route' => 'teachers.index',
+    ],
+    [
+        'menu' => 1,
+        'name' => 'Calficar Estudiantes',
+        'icon' => 'o-clipboard-document-check',
+        'route' => 'teacher.life.skills.to.assess.index',
+    ],
+    [
+        'menu' => 1,
+        'name' => 'Competencias Humanas',
+        'icon' => 'o-globe-americas',
+        'route' => 'life.skills.index',
+    ],
+    [
+        'menu' => 1,
+        'name' => 'Puestos',
+        'icon' => 'o-identification',
+        'route' => 'positions.index',
+    ],
+    [
+        'menu' => 1,
+        'name' => 'Roles y Permisos',
+        'icon' => 'o-cog',
+        'route' => 'roles.index',
+    ],
+];
 ?>
 
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-theme="winter">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -107,7 +97,7 @@
     @livewireStyles
 </head>
 
-<body class="font-sans antialiased">
+<body class="min-h-screen font-sans ">
 
     <x-mary-nav sticky full-width>
         <x-slot:brand>
@@ -123,53 +113,60 @@
         </x-slot:actions>
     </x-mary-nav>
 
-    <x-mary-main with-nav full-width>
+    <x-mary-main full-width>
         <x-slot:sidebar drawer="main-drawer" collapsible class="bg-base-200">
             <x-mary-menu activate-by-route>
-                @forelse ($menuOpciones as $menuOpcion)
-                    @if ($menuOpcion['menu'] == 1)
-                        <x-mary-menu-item title="{{ $menuOpcion['nombre'] }}" icon="{{ $menuOpcion['icon'] }}"
-                            link="{{ route($menuOpcion['ruta']) }}" />
+                @if ($user = auth()->user())
+                    @php
+                        $image = $user->profile_photo_path
+                            ? Storage::url($user->profile_photo_path)
+                            : $user->profile_photo_url;
+                    @endphp
+                    <x-mary-list-item :item="$user" value="name" sub-value="email" no-separator no-hover
+                        class="-mx-2 !-my-2 rounded">
+                        <x-slot:avatar>
+                            <x-mary-avatar :image="$image" class="!w-10" />
+                        </x-slot:avatar>
+                        <x-slot:actions>
+                            <x-mary-dropdown>
+                                <x-slot:trigger>
+                                    <x-mary-button icon="o-cog-6-tooth" class="btn-circle btn-ghost btn-xs" />
+                                </x-slot:trigger>
+                                <x-mary-menu-item icon="o-user" label="{{ __('Perfil') }}"
+                                    link="{{ route('profile.show') }}" />
+                                <x-mary-menu-item icon="o-light-bulb" label="{{ __('Color de tema') }}"
+                                    @click.stop="$dispatch('mary-toggle-theme')" />
+                                <x-mary-menu-item label="{{ __('Módulo de usuarios') }}" icon="o-building-storefront"
+                                    link="/" />
+                                <x-mary-menu-item label="{{ __('Módulo de administradores') }}" icon="o-building-library"
+                                    link="{{ route('dashboard') }}" />
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit">
+                                        <x-mary-menu-item icon="o-arrow-left-end-on-rectangle" label="{{ __('Cerrar sesión') }}"
+                                            no-wire-navigate class="link-error" />
+                                    </button>
+                                </form>
+                            </x-mary-dropdown>
+                        </x-slot:actions>
+                    </x-mary-list-item>
+                @endif
+                <x-mary-menu-separator />
+                @forelse ($menuOptions as $menuOption)
+                    @if ($menuOption['menu'] == 1)
+                        <x-mary-menu-item title="{{ $menuOption['name'] }}" icon="{{ $menuOption['icon'] }}"
+                            link="{{ route($menuOption['route']) }}" />
                     @else
-                        <x-mary-menu-sub title="{{ $menuOpcion['nombre'] }}" icon="{{ $menuOpcion['icon'] }}">
-                            @foreach ($menuOpcion['items'] as $item)
-                                <x-mary-menu-item title="{{ $item['menuItemNombre'] }}"
-                                    icon="{{ $item['menuItemIcon'] }}" link="{{ route($item['menuItemRuta']) }}" />
+                        <x-mary-menu-sub title="{{ $menuOption['name'] }}" icon="{{ $menuOption['icon'] }}">
+                            @foreach ($menuOption['items'] as $item)
+                                <x-mary-menu-item title="{{ $item['menuItemName'] }}"
+                                    icon="{{ $item['menuItemIcon'] }}" link="{{ route($item['menuItemRoute']) }}" />
                             @endforeach
                         </x-mary-menu-sub>
                     @endif
                 @empty
                     <x-mary-menu-item title="Inicio" icon="o-home" link="{{ route('dashboard') }}" />
                 @endforelse
-
-                <div class="absolute bottom-9 left-0 w-full p-2">
-                    @if ($user = auth()->user())
-                        <x-mary-menu-dropdown title="{{ auth()->user()->name }}" value="name"
-                            image="{{ auth()->user()->profile_photo_path ? Storage::url(auth()->user()->profile_photo_path) : auth()->user()->profile_photo_url }}">
-                            <x-mary-menu-dropdown-item title="{{ __('Perfil') }}"
-                                image="{{ auth()->user()->profile_photo_path ? Storage::url(auth()->user()->profile_photo_path) : auth()->user()->profile_photo_url }}"
-                                link="{{ route('profile.show') }}" />
-                            <x-mary-menu-dropdown-item title="{{ __('Módulo de usuarios') }}"
-                                image="https://cdn-icons-png.flaticon.com/512/6330/6330087.png" link="/" />
-                            <x-mary-menu-dropdown-item title="{{ __('Módulo de administradores') }}"
-                                image="https://cdn-icons-png.flaticon.com/512/2666/2666371.png"
-                                link="{{ route('dashboard') }}" />
-                            <li>
-                                <form method="POST" action="{{ route('logout') }}">
-                                    @csrf
-                                    <button type="submit"
-                                        class="my-0.5 hover:text-inherit rounded-md whitespace-nowrap flex items-center">
-                                        <span class="block -mt-0.5 w-5 h-5">
-                                            <x-icons.logout-icon />
-                                        </span>
-                                        <span
-                                            class="mary-hideable whitespace-nowrap truncate ml-2">{{ __('Cerrar sesión') }}</span>
-                                    </button>
-                                </form>
-                            </li>
-                        </x-mary-menu-dropdown>
-                    @endif
-                </div>
             </x-mary-menu>
         </x-slot:sidebar>
 

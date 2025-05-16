@@ -2,12 +2,13 @@
 
 namespace App\Actions\Student;
 
-use App\Models\Student;
 use App\Models\Grup;
-use App\Models\Specialtie;
+use App\Models\Student;
 use App\Models\SubGrup;
+use App\Models\Specialtie;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Models\StudentLifeSkillScore;
 
 class ImportStudentsFromExcel
 {
@@ -133,13 +134,18 @@ class ImportStudentsFromExcel
                     continue;
                 }
 
-                Student::create([
+                $student = Student::create([
                     'sub_grup_id'  => $subGrup_id->id,
                     'first_name'   => $first_name,
                     'middle_name'  => $middle_name,
                     'last_name1'   => $last_name1,
                     'last_name2'   => $last_name2,
                     'id_card'      => $id_card,
+                ]);
+                
+                StudentLifeSkillScore::create([
+                    'student_id' => $student->id,
+                    'score' => 100
                 ]);
             }
 
@@ -248,13 +254,18 @@ class ImportStudentsFromExcel
                     continue;
                 }
 
-                Student::create([
+                $student = Student::create([
                     'sub_grup_id'  => $subGrup_id->id,
                     'first_name'   => $first_name,
                     'middle_name'  => $middle_name,
                     'last_name1'   => $last_name1,
                     'last_name2'   => $last_name2,
                     'id_card'      => $id_card,
+                ]);
+
+                StudentLifeSkillScore::create([
+                    'student_id' => $student->id,
+                    'score' => 100
                 ]);
             }
 

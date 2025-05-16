@@ -8,6 +8,7 @@ use Mary\Traits\Toast;
 use App\Models\Student;
 use App\Models\SubGrup;
 use Livewire\Component;
+use App\Models\StudentLifeSkillScore;
 
 class Create extends Component
 {
@@ -26,7 +27,8 @@ class Create extends Component
         'sub_grup_id' => 'required|exists:sub_grups,id',
     ];
 
-    public function mount(){
+    public function mount()
+    {
         $this->level_id = 0;
         $this->grup_id = 0;
     }
@@ -35,7 +37,7 @@ class Create extends Component
     {
         $this->validate();
 
-        Student::create([
+        $student = Student::create([
             'sub_grup_id' => $this->sub_grup_id,
             'id_card' => $this->id_card,
             'first_name' => $this->first_name,
@@ -44,13 +46,18 @@ class Create extends Component
             'last_name2' => $this->last_name2,
         ]);
 
+        StudentLifeSkillScore::create([
+            'student_id' => $student->id,
+            'score' => 100
+        ]);
+        
         return $this->success(
             __('¡Creado exitosamente!'),
             __('Estas siendo redirigido.'),
             redirectTo: route('students.index')
         );
     }
-    
+
 
     public function loadGrups()
     {

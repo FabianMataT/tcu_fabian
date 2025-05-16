@@ -12,17 +12,6 @@ class TeachersSeeder extends Seeder
     {
         
         Teacher::create([
-            'first_name' => 'Fabian',
-            'middle_name' => '',
-            'last_name1' => 'Mata',
-            'last_name2' => 'Tencio',
-            'email' => 'fabian@gmail.com',
-            'phone' => "75478953",
-            'user_id' => 1,
-            'position_id' => 4,
-        ]);
-        
-        Teacher::create([
             'first_name' => 'Gabriel',
             'middle_name' => 'Luis',
             'last_name1' => 'Nuñez',

@@ -2,8 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Livewire\Pages\Home;
-
 use App\Livewire\Pages\Specialties\Index as IndexSpecialties;
 use App\Livewire\Pages\Specialties\Create as CreateSpecialties;
 use App\Livewire\Pages\Specialties\Edit as EditSpecialties;
@@ -17,6 +15,9 @@ use App\Livewire\Pages\Students\Create as CreateStudents;
 use App\Livewire\Pages\Students\Edit as EditStudents;
 use App\Livewire\Pages\Students\Show as ShowStudents;
 use App\Livewire\Pages\Students\StudentsXGrups\Create as CreateStudentsXGrups;
+use App\Livewire\Pages\Students\PeriodScores\Show as ShowStudentsPeriodScores;
+use App\Livewire\Pages\Students\LifeSkillSubjectPeriodScore\Show as ShowStudentsLifeSkillSubjectPeriodScore;
+use App\Livewire\Pages\Students\LifeSkillSubjectPeriodScore\Edit as EditStudentsLifeSkillSubjectPeriodScore;
 
 use App\Livewire\Pages\Subjects\Menu as MenuSubjects;
 use App\Livewire\Pages\Subjects\Index as IndexSubjects;
@@ -38,13 +39,14 @@ use App\Livewire\Pages\LifeSkills\Index as IndexLifeSkills;
 use App\Livewire\Pages\LifeSkills\Create as CreateLifeSkills;
 use App\Livewire\Pages\LifeSkills\Edit as EditLifeSkills;
 
+use App\Livewire\Pages\TeacherLifeSkillsToAssess\Index as IndexTeacherLifeSkillsToAssess;
+use App\Livewire\Pages\TeacherLifeSkillsToAssess\StudentToAssessLifeSkill\Show as ShowStudentToAssessLifeSkill;
+use App\Livewire\Pages\TeacherLifeSkillsToAssess\StudentToAssessLifeSkill\Create as CreateStudentToAssessLifeSkill;
+
 use App\Livewire\Pages\Roles\Index as IndexRoles;
 use App\Livewire\Pages\Roles\Create as CreateRoles;
 use App\Livewire\Pages\Roles\Show as ShowRoles;
 use App\Livewire\Pages\Roles\Edit as EditRoles;
-
-
-Route::get('/dashboard', Home::class)->name('dashboard');
 
 // Especialidades
 Route::get('/specialties', IndexSpecialties::class)->name('specialties.index')->middleware('permission:specialties.index');
@@ -62,6 +64,9 @@ Route::get('/students/create', CreateStudents::class)->name('students.create')->
 Route::get('/students/edit/{student}', EditStudents::class)->name('students.edit')->middleware('permission:students.edit');
 Route::get('/students/show/{student}', ShowStudents::class)->name('students.show')->middleware('permission:students.show');
 Route::get('/students/students-x-grup/create/{grup}', CreateStudentsXGrups::class)->name('students_x_grup.create')->middleware('permission:students.create');
+Route::get('/students/period-scores/show/{studentperiodscore}', ShowStudentsPeriodScores::class)->name('students.period.score.show')->middleware('permission:period.score.show');
+Route::get('/students/life-skill-subject-period-score/show/{subjectperiodscore}', ShowStudentsLifeSkillSubjectPeriodScore::class)->name('students.life.skill.subject.period.score.show')->middleware('permission:period.score.show');
+Route::get('/students/life-skill-subject-period-score/edit/{subjectperiodscore}', EditStudentsLifeSkillSubjectPeriodScore::class)->name('students.life.skill.subject.period.score.edit')->middleware('permission:student.life.skill.score.edit');
 
 // Materias
 Route::get('/subjects/menu', MenuSubjects::class)->name('subjects.menu')->middleware('permission:subjects.menu');
@@ -86,6 +91,11 @@ Route::get('/positions/show/{position}', ShowPositions::class)->name('positions.
 Route::get('/life-skills', IndexLifeSkills::class)->name('life.skills.index')->middleware('permission:life.skills.index'); 
 Route::get('/life-skills/create', CreateLifeSkills::class)->name('life.skills.create')->middleware('permission:life.skills.create'); 
 Route::get('/life-skills/edit/{life_skill}', EditLifeSkills::class)->name('life.skills.edit')->middleware('permission:life.skills.edit'); 
+
+// Calificar Compentencias de los Estudiantes
+Route::get('/teacher-life-skills-to-assess', IndexTeacherLifeSkillsToAssess::class)->name('teacher.life.skills.to.assess.index')->middleware('permission:teacher.life.skills.to.assess.index');
+Route::get('/teacher-life-skills-to-assess/students-to-assess-life-skills/{gruptoassess}', ShowStudentToAssessLifeSkill::class)->name('students.to.assess.life.skills.show')->middleware('permission:student.to.assess.life.skills.show');
+Route::get('/teacher-life-skills-to-assess/students-to-assess-life-skills/create/{studenttoassess}', CreateStudentToAssessLifeSkill::class)->name('students.to.assess.life.skills.create')->middleware('permission:student.to.assess.life.skills.create');
 
 // Roles y Permisos
 Route::get('/roles', IndexRoles::class)->name('roles.index')->middleware('permission:roles.index');

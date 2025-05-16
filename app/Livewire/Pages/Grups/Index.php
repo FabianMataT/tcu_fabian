@@ -44,7 +44,7 @@ class Index extends Component
     {
         $grups = Grup::with(['level:id,name', 'specialtiesXGrup:specialties.id,acronym', 'subGrup:id', 'subGrup:subjects_taught_by_teacher.id,teacher_id'])
             ->when(
-                in_array($this->user->teacher->position->name, ['Profesor Académico', 'Profesor Técnico']),
+                $this->user?->teacher?->first_name,
                 fn($q) => $q->whereHas('subGrup.subjects_taught_by_teacher', function ($query) {
                     $query->where('teacher_id', $this->user->teacher->id);
                 })

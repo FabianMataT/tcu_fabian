@@ -13,6 +13,10 @@ class Level extends Model
 
     public function grup()
     {
-        return $this->hasMany(Grup::class, 'nivelID');
+        return $this->hasMany(Grup::class, 'level_id');
+    }
+
+    public function studentLifeSkillPeriodScore(){
+        return $this->hasMany(StudentLifeSkillPeriodScore::class, 'level_id');
     }
 }

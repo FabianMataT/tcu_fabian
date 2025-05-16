@@ -20,19 +20,18 @@ class Student extends Model
         return $this->belongsTo(SubGrup::class, 'sub_grup_id');
     }
 
-    public function estudiantes_a_calificar_competencia()
-    {
-        return $this->hasMany(Estudiantes_a_calificar_competencia::class, 'estudianteID');
+    public function studentToAssessLifeSkill(){
+        return $this->hasMany(StudentToAssessLifeSkill::class, 'student_id');
     }
 
-    public function calificacion_competencias_estudiante()
+    public function studentLifeSkillScore()
     {
-        return $this->belongsTo(Calificacion_competencias_estudiante::class, 'estudianteID');
+        return $this->hasMany(StudentLifeSkillScore::class, 'student_id');
     }
 
-    public function calificacion_competencias_x_periodos_x_estudiante()
+    public function studentLifeSkillPeriodScore()
     {
-        return $this->hasMany(Calificacion_competencias_x_periodos_x_estudiante::class, 'estudianteID');
+        return $this->hasMany(StudentLifeSkillPeriodScore::class, 'student_id');
     }
     
 }

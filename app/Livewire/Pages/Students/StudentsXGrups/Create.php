@@ -3,11 +3,12 @@
 namespace App\Livewire\Pages\Students\StudentsXGrups;
 
 use App\Models\Grup;
-use App\Models\Student;
 use Mary\Traits\Toast;
+use App\Models\Student;
 use App\Models\SubGrup;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
+use App\Models\StudentLifeSkillScore;
 
 class Create extends Component
 {
@@ -30,13 +31,18 @@ class Create extends Component
     {
         $this->validate();
 
-        Student::create([
+        $student = Student::create([
             'sub_grup_id' => $this->sub_grup_id,
             'id_card' => $this->id_card,
             'first_name' => $this->first_name,
             'middle_name' => $this->middle_name ?? '',
             'last_name1' => $this->last_name1,
             'last_name2' => $this->last_name2,
+        ]);
+
+        StudentLifeSkillScore::create([
+            'student_id' => $student->id,
+            'score' => 100
         ]);
 
         return $this->success(

@@ -32,4 +32,7 @@ class Teacher extends Model
         return $this->hasMany(SubjectsTaughtByTeachers::class, 'teacher_id');
     }
     
+    public function studentLifeSkillSubjectPeriodScore(){
+        return $this->hasMany(StudentLifeSkillSubjectPeriodScore::class, 'teacher_id');
+    }
 }
