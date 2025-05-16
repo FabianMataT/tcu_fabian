@@ -20,7 +20,7 @@ class Show extends Component
         $this->modalDeletConf = true;
     }
 
-    public function destroy(): void
+    public function destroy()
     {
         $this->modalDeletConf = false;
         if ($this->student === null) {
@@ -28,7 +28,11 @@ class Show extends Component
             return;
         }
         $this->student->delete();
-        $this->success(__('Eliminado exitosamente!'));
+        return $this->success(
+            __('Eliminado exitosamente!'),
+            __('Estas siendo redirigido.'),
+            redirectTo: route('students.index')
+        );
         $this->student = null;
     }
 

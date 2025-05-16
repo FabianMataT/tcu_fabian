@@ -8,7 +8,7 @@
     </x-slot>
 
     <x-slot name="content">
-        <div class="max-w-xl text-sm text-gray-600">
+        <div class="max-w-xl text-sm text-gray-700 dark:text-gray-200">
             {{ __('If necessary, you may log out of all of your other browser sessions across all of your devices. Some of your recent sessions are listed below; however, this list may not be exhaustive. If you feel your account has been compromised, you should also update your password.') }}
         </div>
 
@@ -30,12 +30,12 @@
                         </div>
 
                         <div class="ms-3">
-                            <div class="text-sm text-gray-600">
+                            <div class="text-sm text-gray-700 dark:text-gray-200">
                                 {{ $session->agent->platform() ? $session->agent->platform() : __('Unknown') }} - {{ $session->agent->browser() ? $session->agent->browser() : __('Unknown') }}
                             </div>
 
                             <div>
-                                <div class="text-xs text-gray-500">
+                                <div class="text-xs text-gray-600 dark:text-gray-300">
                                     {{ $session->ip_address }},
 
                                     @if ($session->is_current_device)
@@ -52,9 +52,9 @@
         @endif
 
         <div class="flex items-center mt-5">
-            <x-button wire:click="confirmLogout" wire:loading.attr="disabled">
+            <x-mary-button wire:click="confirmLogout" wire:loading.attr="disabled">
                 {{ __('Log Out Other Browser Sessions') }}
-            </x-button>
+            </x-mary-button>
 
             <x-action-message class="ms-3" on="loggedOut">
                 {{ __('Done.') }}
@@ -71,7 +71,7 @@
                 {{ __('Please enter your password to confirm you would like to log out of your other browser sessions across all of your devices.') }}
 
                 <div class="mt-4" x-data="{}" x-on:confirming-logout-other-browser-sessions.window="setTimeout(() => $refs.password.focus(), 250)">
-                    <x-input type="password" class="mt-1 block w-3/4"
+                    <x-mary-input type="password" class="mt-1 block w-3/4"
                                 autocomplete="current-password"
                                 placeholder="{{ __('Password') }}"
                                 x-ref="password"
@@ -87,11 +87,11 @@
                     {{ __('Cancel') }}
                 </x-secondary-button>
 
-                <x-button class="ms-3"
+                <x-mary-button class="ms-3"
                             wire:click="logoutOtherBrowserSessions"
                             wire:loading.attr="disabled">
                     {{ __('Log Out Other Browser Sessions') }}
-                </x-button>
+                </x-mary-button>
             </x-slot>
         </x-dialog-modal>
     </x-slot>
