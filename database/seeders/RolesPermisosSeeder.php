@@ -10,10 +10,10 @@ class RolesPermisosSeeder extends Seeder
 {
     public function run(): void
     {
-        $role1 = Role::create(['name' => 'Admini']);
-        $role2 = Role::create(['name' => 'Ejecutivo']);
-        $role3 = Role::create(['name' => 'Profesor nvl 1']);
-        $role4 = Role::create(['name' => 'Profesor nvl 2']);
+        $role1 = Role::create(['name' => 'Admi']);
+        $role2 = Role::create(['name' => 'Ejecutivo 1']);
+        $role3 = Role::create(['name' => 'Profesor nvl 3']);
+        $role4 = Role::create(['name' => 'Profesor nvl 4']);
 
         //Opciones del Menu
         Permission::create(['name' => 'home.index', 'description' => 'Inicio', 'module_id' => 1])->syncRoles([$role1, $role2, $role3, $role4]);
