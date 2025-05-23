@@ -3,15 +3,14 @@
         <x-slot:subtitle>
             Estudiante: {{ $studentperiodscore->student->first_name }} {{ $studentperiodscore->student->last_name1 }}
             {{ $studentperiodscore->student->last_name2 }} <br>
-            Calificación general: {{$studentperiodscore->score}}
+            Calificación general: {{ $studentperiodscore->score }}
         </x-slot:subtitle>
         <x-slot:actions>
-            <div class="flex flex-wrap gap-2 justify-end">
-                <x-mary-button icon="o-arrow-left" class="btn-neutral"
-                    link="{{ route('students.show', $studentperiodscore->student_id) }}">
-                    {{ __('Regrear') }}
-                </x-mary-button>
-            </div>
+            <x-mary-button label="Imprimir" icon="o-printer" class="btn-primary no-print" onclick="window.print()" />
+            <x-mary-button icon="o-arrow-left" class="btn-neutral no-print"
+                link="{{ route('students.show', $studentperiodscore->student_id) }}">
+                {{ __('Regrear') }}
+            </x-mary-button>
         </x-slot:actions>
     </x-mary-header>
 
@@ -39,19 +38,19 @@
                 </div>
                 @haspermission('period.score.show')
                     <div class="mt-1">
-                        <x-mary-button label="Ver detalle" class="btn-sm btn-neutral"
+                        <x-mary-button label="Ver detalle" class="btn-sm btn-neutral no-print"
                             link="{{ route('students.life.skill.subject.period.score.show', $subjectPeriodScore->id) }}" />
                     </div>
                 @endhaspermission
                 @haspermission('student.life.skill.score.edit')
                     <div class="mt-1">
-                        <x-mary-button label="Editar" class="btn-sm btn-edit"
+                        <x-mary-button label="Editar" class="btn-sm btn-edit no-print"
                             link="{{ route('students.life.skill.subject.period.score.edit', $subjectPeriodScore->id) }}" />
                     </div>
                 @endhaspermission
                 @haspermission('student.life.skill.score.delete')
                     <div class="mt-1">
-                        <x-mary-button icon="o-trash" class="btn-sm btn-delete" spinner
+                        <x-mary-button icon="o-trash" class="btn-sm btn-delete no-print" spinner
                             wire:click='deleteConf({{ $subjectPeriodScore->id }})' />
                     </div>
                 @endhaspermission

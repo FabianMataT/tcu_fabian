@@ -2,60 +2,70 @@
 $menuOptions = [
     [
         'menu' => 1,
+        'permission' => 'home.index',
         'name' => 'Inicio',
         'icon' => 'o-home',
         'route' => 'dashboard',
     ],
     [
         'menu' => 1,
+        'permission' => 'specialties.index',
         'name' => 'Especialidades',
         'icon' => 'o-newspaper',
         'route' => 'specialties.index',
     ],
     [
         'menu' => 1,
+        'permission' => 'grups.index',
         'name' => 'Grupos',
         'icon' => 'o-server-stack',
         'route' => 'grups.index',
     ],
     [
         'menu' => 1,
+        'permission' => 'students.index',
         'name' => 'Estudiantes',
         'icon' => 'o-user-group',
         'route' => 'students.index',
     ],
     [
         'menu' => 1,
+        'permission' => 'subjects.menu',
         'name' => 'Materias',
         'icon' => 'o-rectangle-stack',
         'route' => 'subjects.menu',
     ],
     [
         'menu' => 1,
+        'permission' => 'teachers.index',
         'name' => 'Profesores',
         'icon' => 'o-users',
         'route' => 'teachers.index',
     ],
     [
         'menu' => 1,
+        'permission' => 'teacher.life.skills.to.assess.index',
         'name' => 'Calficar Estudiantes',
         'icon' => 'o-clipboard-document-check',
         'route' => 'teacher.life.skills.to.assess.index',
     ],
     [
         'menu' => 1,
+        'permission' => 'life.skills.index',
         'name' => 'Competencias Humanas',
         'icon' => 'o-globe-americas',
         'route' => 'life.skills.index',
     ],
     [
         'menu' => 1,
+        'permission' => 'positions.index',
         'name' => 'Puestos',
         'icon' => 'o-identification',
         'route' => 'positions.index',
     ],
     [
         'menu' => 1,
+        'permission' => 'roles.index',
         'name' => 'Roles y Permisos',
         'icon' => 'o-cog',
         'route' => 'roles.index',
@@ -138,13 +148,13 @@ $menuOptions = [
                                     @click.stop="$dispatch('mary-toggle-theme')" />
                                 <x-mary-menu-item label="{{ __('Módulo de usuarios') }}" icon="o-building-storefront"
                                     link="/" />
-                                <x-mary-menu-item label="{{ __('Módulo de administradores') }}" icon="o-building-library"
-                                    link="{{ route('dashboard') }}" />
+                                <x-mary-menu-item label="{{ __('Módulo de administradores') }}"
+                                    icon="o-building-library" link="{{ route('dashboard') }}" />
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
                                     <button type="submit">
-                                        <x-mary-menu-item icon="o-arrow-left-end-on-rectangle" label="{{ __('Cerrar sesión') }}"
-                                            no-wire-navigate class="link-error" />
+                                        <x-mary-menu-item icon="o-arrow-left-end-on-rectangle"
+                                            label="{{ __('Cerrar sesión') }}" no-wire-navigate class="link-error" />
                                     </button>
                                 </form>
                             </x-mary-dropdown>
@@ -154,8 +164,10 @@ $menuOptions = [
                 <x-mary-menu-separator />
                 @forelse ($menuOptions as $menuOption)
                     @if ($menuOption['menu'] == 1)
-                        <x-mary-menu-item title="{{ $menuOption['name'] }}" icon="{{ $menuOption['icon'] }}"
-                            link="{{ route($menuOption['route']) }}" />
+                        @haspermission($menuOption['permission'])
+                            <x-mary-menu-item title="{{ $menuOption['name'] }}" icon="{{ $menuOption['icon'] }}"
+                                link="{{ route($menuOption['route']) }}" />
+                        @endhaspermission
                     @else
                         <x-mary-menu-sub title="{{ $menuOption['name'] }}" icon="{{ $menuOption['icon'] }}">
                             @foreach ($menuOption['items'] as $item)

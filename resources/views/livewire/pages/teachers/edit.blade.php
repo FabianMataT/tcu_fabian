@@ -22,7 +22,14 @@
                 </div>
             </div>
 
-            <x-mary-input label="{{ __('Correo') }}" wire:model="email" type="email" />
+            <div class="flex flex-col sm:flex-row gap-4 w-full">
+                <div class="w-full">
+                    <x-mary-input label="{{ __('Correo') }}" wire:model="email" type="email" />
+                </div>
+                <div class="w-full">
+                    <x-mary-password label="{{ __('Password') }}" wire:model="password" right />
+                </div>
+            </div>
 
             <x-mary-input label="{{ __('Teléfono ') }}" wire:model="phone" />
 

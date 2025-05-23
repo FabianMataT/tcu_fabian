@@ -16,6 +16,7 @@ class RolesPermisosSeeder extends Seeder
         $role4 = Role::create(['name' => 'Profesor nvl 2']);
 
         //Opciones del Menu
+        Permission::create(['name' => 'home.index', 'description' => 'Inicio', 'module_id' => 1])->syncRoles([$role1, $role2, $role3, $role4]);
         Permission::create(['name' => 'specialties.index', 'description' => 'Especialidades', 'module_id' => 1])->syncRoles([$role1, $role2]);
         Permission::create(['name' => 'grups.index', 'description' => 'Grupos', 'module_id' => 1])->syncRoles([$role1, $role2, $role3, $role4]);
         Permission::create(['name' => 'students.index', 'description' => 'Estudiantes', 'module_id' => 1])->syncRoles([$role1, $role2, $role3, $role4]);
@@ -88,7 +89,7 @@ class RolesPermisosSeeder extends Seeder
         Permission::create(['name' => 'student.to.assess.life.skills.create', 'description' => 'Calificar las competencias de los estudiantes', 'module_id' => 10])->syncRoles([$role1, $role2, $role3, $role4]);
         Permission::create(['name' => 'student.to.assess.life.skills.delete', 'description' => 'Calificar las competencias de los estudiantes', 'module_id' => 10])->syncRoles([$role1, $role2]);
         
-        Permission::create(['name' => 'student.life.skill.score.edit', 'description' => 'Editar evalución de los estudiantes', 'module_id' => 10])->syncRoles([$role1, $role2, $role3, $role4]);
+        Permission::create(['name' => 'student.life.skill.score.edit', 'description' => 'Editar evalución de los estudiantes', 'module_id' => 10])->syncRoles([$role1, $role2]);
         Permission::create(['name' => 'student.life.skill.score.delete', 'description' => 'Eliminar evalución de los estudiantes', 'module_id' => 10])->syncRoles([$role1]);
         Permission::create(['name' => 'period.score.show', 'description' => 'Ver periodos de evalución', 'module_id' => 10])->syncRoles([$role1, $role2, $role3, $role4]);
         Permission::create(['name' => 'period.score.delete', 'description' => 'Eliminar periodos de evalución', 'module_id' => 10])->syncRoles([$role1]);

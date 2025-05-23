@@ -1,7 +1,8 @@
 <div>
     <x-mary-header title="{{ __('Evaluación') }}" subtitle="{{ $student_full_name }}">
         <x-slot:actions>
-            <x-mary-button icon="o-arrow-left" class="btn-neutral"
+            <x-mary-button label="Imprimir" icon="o-printer" class="btn-primary no-print" onclick="window.print()" />
+            <x-mary-button icon="o-arrow-left" class="btn-neutral no-print"
                 link="{{ route('students.period.score.show', $subjectperiodscore->student_life_skill_period_score_id) }}">
                 {{ __('Regrear') }}
             </x-mary-button>
@@ -14,7 +15,8 @@
                     <th class="bg-gray-200 dark:bg-gray-700 p-2 border-r">N°</th>
                     <th class="bg-gray-200 dark:bg-gray-700 p-2 border-r">Habilidades personales requeridas en
                         cualquier campo en que nos desempeñamos y permiten interactuar con los démas</th>
-                    <th class="p-2 border-r text-center text-xl" colspan="4">Nota {{$subjectperiodscore->score}}</th>
+                    <th class="p-2 border-r text-center text-xl" colspan="4">Nota {{ $subjectperiodscore->score }}
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -22,7 +24,8 @@
                     <td class="p-2 border-r"></td>
                     <td class="p-2 border-r text-sm">Evalúe todas las
                         competencias para el desarrollo humano</td>
-                    <td class="p-2 border-r text-center text-lg" colspan="4">Puntos: {{$subjectperiodscore->earned_points}} / {{$subjectperiodscore->total_points}}</td>
+                    <td class="p-2 border-r text-center text-lg" colspan="4">Puntos:
+                        {{ $subjectperiodscore->earned_points }} / {{ $subjectperiodscore->total_points }}</td>
                 </tr>
                 <tr class="border-t border-gray-300 dark:border-gray-600">
                     <td class="p-2 border-r"></td>

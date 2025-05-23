@@ -26,6 +26,11 @@ class Specialtie extends Model
         return $this->hasMany(SubGrup::class, 'specialtie_id');
     }
 
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
     public function image() : Attribute
     {
         return Attribute::make(

@@ -34,11 +34,11 @@
             @scope('actions', $specialtie)
                 <div class="flex gap-4 p-2">
                     @haspermission('specialties.show')
-                        <x-mary-button icon="o-eye" link="{{ route('specialties.show', $specialtie->id) }}"
+                        <x-mary-button icon="o-eye" link="{{ route('specialties.show', $specialtie) }}"
                             class="btn-sm btn-show" />
                     @endhaspermission
                     @haspermission('specialties.edit')
-                        <x-mary-button icon="o-pencil" link="{{ route('specialties.edit', $specialtie->id) }}"
+                        <x-mary-button icon="o-pencil" link="{{ route('specialties.edit', $specialtie) }}"
                             class="btn-sm btn-edit" />
                     @endhaspermission
                     @haspermission('specialties.delete')

@@ -13,27 +13,6 @@
 
     <x-mary-card shadow separator>
         <x-mary-table :headers="$headers" :rows="$teachers" :sort-by="$sortBy" with-pagination per-page="perPage">
-            <!--------------------------- Headers ----------------------------->
-            @scope('header_name', $header)
-                <h2 class="text-base md:text-lg font-bold">
-                    {{ $header['label'] }}
-                </h2>
-            @endscope
-            @scope('header_email', $header)
-                <h2 class="text-base md:text-lg font-bold">
-                    {{ $header['label'] }}
-                </h2>
-            @endscope
-            @scope('header_position.name', $header)
-                <h2 class="text-base md:text-lg font-bold">
-                    {{ $header['label'] }}
-                </h2>
-            @endscope
-            @scope('header_rol', $header)
-                <h2 class="text-base md:text-lg font-bold">
-                    {{ $header['label'] }}
-                </h2>
-            @endscope
             <!--------------------------- Cells ----------------------------->
             @scope('cell_name', $teacher)
                 <p class="text-sm font-medium">{{ $teacher->first_name }} {{ $teacher->middle_name }}
@@ -58,10 +37,6 @@
                         <x-mary-button icon="o-pencil" link="{{ route('teachers.edit', $teacher->id) }}"
                             class="btn-sm btn-edit" />
                     @endhaspermission
-                    @haspermission('teachers.delete')
-                        <x-mary-button icon="o-trash" class="btn-sm btn-delete" spinner
-                            wire:click='deleteConf({{ $teacher->id }})' />
-                    @endhaspermission
                 </div>
             @endscope
             <x-slot:empty>
@@ -69,15 +44,4 @@
             </x-slot:empty>
         </x-mary-table>
     </x-mary-card>
-
-    <x-mary-modal wire:model="modalDeletConf" class="backdrop-blur">
-        <div class="mb-5">
-            <h3 class="font-extrabold mb-12">{{ __('¿Estas seguro?') }}</h3>
-            <p>{{ __('Una vez se elimine un profesor, se eliminaran todos los datos asociados a la mismo') }}</p>
-        </div>
-        <div class="flex flex-row items-center justify-end gap-4">
-            <x-mary-button label="Cancelar" @click="$wire.modalDeletConf = false" class="btn btn-cancel text-white" />
-            <x-mary-button wire:click="destroy()" label="{{ __('Elinminar') }}" class="btn btn-error text-white" />
-        </div>
-    </x-mary-modal>
 </div>

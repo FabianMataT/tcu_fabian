@@ -23,7 +23,7 @@
 
         <x-slot:actions class="flex justify-end gap-4 mt-6">
             @haspermission('specialties.edit')
-                <x-mary-button link="{{ route('specialties.edit', $specialtie->id) }}" label="{{ __('Editar') }}"
+                <x-mary-button link="{{ route('specialties.edit', $specialtie) }}" label="{{ __('Editar') }}"
                     class="btn bg-blue-500 text-white hover:bg-blue-600" />
             @endhaspermission
 

@@ -16,6 +16,7 @@ class Edit extends Component
     public ?User $user = null;
     public ?Teacher $teacher = null;
     public String $first_name, $middle_name, $last_name1, $last_name2, $email, $phone, $role_name;
+    public ?string $password = null;
     public int $selectedPosition;
     public $roles, $positions = [];
 
@@ -28,6 +29,7 @@ class Edit extends Component
         'phone' => 'required|string|max:20',
         'selectedPosition' => 'required|exists:positions,id',
         'role_name' => 'required|string|exists:roles,name',
+        'password' => 'nullable|string|max:50'
     ];
 
     public function mount():void
@@ -49,6 +51,11 @@ class Edit extends Component
         
         if ($this->role_name) {
             $this->user->syncRoles([$this->role_name]); 
+        }
+
+        if($this->password){
+            $this->user->password = bcrypt($this->password);
+            $this->user->save();
         }
 
         $this->teacher->first_name = $this->first_name;

@@ -14,7 +14,6 @@ class Index extends Component
     use WithPagination;
     use Toast;
 
-    public bool $modalDeletConf = false;
     public $perPage = 10;
     public array $sortBy = ['column' => 'nombre', 'direction' => 'asc'];
     public string $search = '';
@@ -51,24 +50,6 @@ class Index extends Component
         $items = $teachers->slice(($currentPage - 1) * $this->perPage)->values();
 
         return new LengthAwarePaginator($items, $teachers->count(), $this->perPage, $currentPage);
-    }
-
-    public function deleteConf(Teacher $teacher): void
-    {
-        $this->teacher = $teacher;
-        $this->modalDeletConf = true;
-    }
-
-    public function destroy(): void
-    {
-        if ($this->teacher) {
-            $this->user = $this->teacher->user;
-            $this->user->delete();
-            $this->user = null;
-            $this->teacher = null;
-            $this->modalDeletConf = false;
-            $this->success(__('¡Profesor eliminado exitosamente!'));
-        }
     }
 
     public function render()

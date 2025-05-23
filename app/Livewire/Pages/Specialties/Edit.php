@@ -17,10 +17,10 @@ class Edit extends Component
     public $image_path, $new_image;
 
     protected $rules = [
-        'acronym' => 'required|string|max:30',
+        'acronym' => 'required|string|max:50',
         'name' => 'required|string|max:60',
         'description' => 'required|string|max:500',
-        'new_image' => 'nullable|image|max:100'
+        'new_image' => 'nullable|image|max:300'
     ];
 
     public function mount()
@@ -35,8 +35,11 @@ class Edit extends Component
     {
         $this->validate();
 
-        if ($this->new_image && $this->specialtie->image_path && Storage::disk('public')->exists($this->specialtie->image_path)) {
-            Storage::disk('public')->delete($this->specialtie->image_path);
+        if ($this->new_image) {
+            if ($this->specialtie->image_path && Storage::disk('public')->exists($this->specialtie->image_path)) {
+                Storage::disk('public')->delete($this->specialtie->image_path);
+                $this->specialtie->image_path = $this->new_image->store('especialidades', 'public');
+            }
             $this->specialtie->image_path = $this->new_image->store('especialidades', 'public');
         }
 

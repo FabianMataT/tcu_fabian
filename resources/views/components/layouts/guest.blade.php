@@ -18,7 +18,7 @@
 
 </head>
 
-<body class="font-sans antialiased bg-gray-50">
+<body class="font-sans antialiased bg-gray-100">
     <div class="flex" id="wrapper" x-data="{ isOpen: true, mobileMenuOpen: false }">
         <!-- Sidebar móvil -->
         <aside id="mobileSidebar"
@@ -37,40 +37,22 @@
                 </button>
             </div>
             <ul class="p-4 space-y-2">
-                <li>
+                <li class="border-t border-blue-700 pt-4 mt-4">
                     <a href="/"
                         class="flex items-center space-x-4 text-gray-300 hover:text-white hover:bg-blue-800 px-3 py-2 rounded-md transition">
                         <span>Inicio</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#nosotros"
+                    <a href="{{ route('guest.specialties.index') }}"
                         class="flex items-center space-x-4 text-gray-300 hover:text-white hover:bg-blue-800 px-3 py-2 rounded-md transition">
-                        <span>Nosotros</span>
+                        <span>Especialidades</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#programas"
-                        class="flex items-center space-x-4 text-gray-300 hover:text-white hover:bg-blue-800 px-3 py-2 rounded-md transition">
-                        <span>Programas</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#admisiones"
+                    <a href="{{ route('guest.admissions.index') }}"
                         class="flex items-center space-x-4 text-gray-300 hover:text-white hover:bg-blue-800 px-3 py-2 rounded-md transition">
                         <span>Admisiones</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#instalaciones"
-                        class="flex items-center space-x-4 text-gray-300 hover:text-white hover:bg-blue-800 px-3 py-2 rounded-md transition">
-                        <span>Instalaciones</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#contacto"
-                        class="flex items-center space-x-4 text-gray-300 hover:text-white hover:bg-blue-800 px-3 py-2 rounded-md transition">
-                        <span>Contacto</span>
                     </a>
                 </li>
                 <li class="border-t border-blue-700 pt-4 mt-4">
@@ -96,38 +78,35 @@
         <!-- Navbar -->
         <x-mary-nav class="custom-navbar w-full">
             <x-slot:brand>
-                <!-- Botón de hamburguesa para pantallas pequeñas -->
-                <button @click="mobileMenuOpen = true" aria-label="Abrir menú"
-                    class="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-blue-200 hover:bg-blue-800 transition duration-150 ease-in-out md:hidden">
-                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                        <path :class="{ 'hidden': mobileMenuOpen, 'inline-flex': !mobileMenuOpen }" class="inline-flex"
-                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
-                </button>
-
-                <a href="/" class="flex items-center space-x-2">
-                    <img src="{{ asset('images/CTP_DN_Logo.jpg') }}" alt="logo" class="h-12 w-12 rounded-xl ">
-                    <span class="hidden md:flex font-bold text-xl text-white">CTP Dulce Nombre</span>
-                </a>
+                <div class="flex justify-between items-center w-full">
+                    <button @click="mobileMenuOpen = true" aria-label="Abrir menú"
+                        class="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-blue-200 hover:bg-blue-800 transition duration-150 ease-in-out md:hidden">
+                        <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                            <path :class="{ 'hidden': mobileMenuOpen, 'inline-flex': !mobileMenuOpen }"
+                                class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                    <a href="/" class="flex items-center space-x-2">
+                        <img src="{{ asset('images/CTP_DN_Logo.jpg') }}" alt="logo" class="h-12 w-12 rounded-xl ">
+                        <span class="hidden md:flex font-bold text-xl text-white">CTP Dulce Nombre</span>
+                    </a>
+                </div>
             </x-slot:brand>
 
             <x-slot:actions>
                 <div class="hidden md:flex space-x-6">
-                    <a href="/" class="nav-link">Inicio</a>
-                    <a href="#nosotros" class="nav-link">Nosotros</a>
-                    <a href="#programas" class="nav-link">Programas</a>
-                    <a href="#admisiones" class="nav-link">Admisiones</a>
-                    <a href="#instalaciones" class="nav-link">Instalaciones</a>
-                    <a href="#contacto" class="nav-link">Contacto</a>
+                    <a href="/" class="text-gray-50 hover:text-white hover:bg-blue-600 px-3 py-2 rounded-md transition">Inicio</a>
+                    <a href="{{ route('guest.specialties.index') }}" class="text-gray-50 hover:text-white hover:bg-blue-600 px-3 py-2 rounded-md transition">Especialidades</a>
+                    <a href="{{ route('guest.admissions.index') }}" class="text-gray-50 hover:text-white hover:bg-blue-600 px-3 py-2 rounded-md transition">Admisiones</a>
                 </div>
                 @guest
                     <x-mary-button label="Iniciar sesión" link="{{ route('login') }}"
-                        class="hidden md:flex bg-transparent hover:text-blue-200 text-white border-none" responsive />
+                        class="hidden md:flex bg-transparent hover:bg-blue-600 text-white border-none" responsive />
                 @endguest
                 @auth
                     <x-mary-button label="Módulo de administradores" link="{{ route('dashboard') }}"
-                        class="hidden md:flex bg-transparent hover:text-blue-200 text-white border-none" responsive />
+                        class="hidden md:flex bg-transparent hover:bg-blue-600 text-white border-none" responsive />
                 @endauth
             </x-slot:actions>
         </x-mary-nav>
@@ -140,6 +119,7 @@
     </x-mary-main>
 
     <x-mary-toast />
+    @stack('scripts')
 </body>
 
 </html>

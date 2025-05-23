@@ -16,10 +16,10 @@ class Create extends Component
     public $image;
 
     protected $rules = [
-        'acronym' => 'required|string|max:30',
+        'acronym' => 'required|string|max:50',
         'name' => 'required|string|max:60',
         'description' => 'required|string|max:500',
-        'image' => 'required|image|max:100'
+        'image' => 'required|image|max:300'
     ];
 
     public function store()

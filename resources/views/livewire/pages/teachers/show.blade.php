@@ -1,7 +1,34 @@
 <div>
-    <x-mary-card title="{{ __('Detalles del Profesor') }}"
-        subtitle="{{ __('Información completa del profesor registrado') }}" shadow separator
-        class="border-gray-200 border-2 dark:border-gray-800 dark:bg-gray-800">
+    <x-mary-header title="{{ __('Detalles del Profesor') }}" separator>
+        <x-slot:subtitle>
+            Información completa del profesor registrado
+        </x-slot:subtitle>
+        <x-slot:actions>
+            <div class="flex flex-wrap gap-2 justify-end">
+                @haspermission('teachers.edit')
+                    <x-mary-button link="{{ route('teachers.edit', $teacher->id) }}" label="{{ __('Editar') }}"
+                        class="btn bg-blue-500 text-white hover:bg-blue-600" />
+                @endhaspermission
+                @if ($teacher->user)
+                    @haspermission('teachers.delete')
+                        <x-mary-button label="Desactivar cuenta" class="btn-delete" @click="$wire.modaldesativeConf = true" />
+                    @endhaspermission
+                @else
+                    @haspermission('teachers.create')
+                        <x-mary-button label="Activar cuenta cuenta" class="btn-success"
+                            @click="$wire.modalActiveConf = true" />
+                    @endhaspermission
+                    @haspermission('teachers.delete')
+                        <x-mary-button label="Eliminar" class="btn-delete" @click="$wire.modalDeletConf = true" />
+                    @endhaspermission
+                @endif
+                <x-mary-button icon="o-arrow-left" class="btn-neutral" link="{{ route('teachers.index') }}">
+                    {{ __('Regrear') }}
+                </x-mary-button>
+            </div>
+        </x-slot:actions>
+    </x-mary-header>
+    <x-mary-card shadow separator class="border-gray-200 border-2 dark:border-gray-800 dark:bg-gray-800">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
                 <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-300">Nombre</h3>
@@ -31,18 +58,14 @@
             <div>
                 <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-300">Rol</h3>
                 <p class="text-lg text-gray-900 dark:text-white">
-                    {{ $teacher->user->roles->first()->name ?? 'No asignado' }}
+                    {{ $teacher->user?->roles->first()?->name ?? 'No asignado' }}
                 </p>
             </div>
+            <div>
+                <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-300">Cuenta</h3>
+                <x-mary-badge :value="$teacher->user ? 'Con acceso' : 'Sin acceso'" :class="$teacher->user ? 'badge-success' : 'badge-error'" />
+            </div>
         </div>
-        <x-slot:actions class="flex justify-end gap-4 mt-6">
-            @haspermission('teachers.edit')
-                <x-mary-button link="{{ route('teachers.edit', $teacher->id) }}" label="{{ __('Editar') }}"
-                    class="btn bg-blue-500 text-white hover:bg-blue-600" />
-            @endhaspermission
-            <x-mary-button link="{{ route('teachers.index') }}" label="{{ __('Volver') }}"
-                class="btn bg-gray-500 text-white hover:bg-gray-600" />
-        </x-slot:actions>
     </x-mary-card>
 
     <div class="table-cover">
@@ -57,27 +80,6 @@
         @if ($subjects->isNotEmpty())
             <x-mary-card shadow separator>
                 <x-mary-table :headers="$headers" :rows="$subjects" :sort-by="$sortBy" with-pagination per-page="perPage">
-                    <!--------------------------- Headers ----------------------------->
-                    @scope('header_subject', $header)
-                        <h2 class="text-base md:text-lg font-bold">
-                            {{ $header['label'] }}
-                        </h2>
-                    @endscope
-                    @scope('header_grup', $header)
-                        <h2 class="text-base md:text-lg font-bold">
-                            {{ $header['label'] }}
-                        </h2>
-                    @endscope
-                    @scope('header_subgrup', $header)
-                        <h2 class="text-base md:text-lg font-bold">
-                            {{ $header['label'] }}
-                        </h2>
-                    @endscope
-                    @scope('header_level', $header)
-                        <h2 class="text-base md:text-lg font-bold">
-                            {{ $header['label'] }}
-                        </h2>
-                    @endscope
                     <!--------------------------- Cells ----------------------------->
                     @scope('cell_subject', $row)
                         <p class="text-sm">{{ $row->subject->name }}</p>
@@ -98,7 +100,7 @@
                     @haspermission('subjects.teachers.show')
                         @scope('actions', $row)
                             <x-mary-button icon="o-eye" link="{{ route('subjectsxteachers.show', $row->id) }}"
-                            class="btn-sm btn-show" />
+                                class="btn-sm btn-show" />
                         @endscope
                     @endhaspermission
                     <x-slot:empty>
@@ -112,4 +114,41 @@
             </x-mary-card>
         @endif
     </div>
+
+    <x-mary-modal wire:model="modaldesativeConf" class="backdrop-blur">
+        <div class="mb-5">
+            <h3 class="font-extrabold mb-12">{{ __('Desactivar cuenta') }}</h3>
+            <p>{{ __('El profesor ya no podrá acceder a la aplicación, hasta volver a habilitarle la cuenta.') }}</p>
+        </div>
+        <div class="flex flex-row items-center justify-end gap-4">
+            <x-mary-button label="Cancelar" @click="$wire.modaldesativeConf = false"
+                class="btn btn-cancel text-white" />
+            <x-mary-button wire:click="desactiveAcount()" label="{{ __('Desactivar') }}"
+                class="btn btn-error text-white" />
+        </div>
+    </x-mary-modal>
+
+    <x-mary-modal wire:model="modalActiveConf" class="backdrop-blur">
+        <div class="mb-5">
+            <h3 class="font-extrabold mb-12">{{ __('Activar cuenta') }}</h3>
+            <p>{{ __('El profesor volvera a tener acceso al programa') }}</p>
+        </div>
+        <div class="flex flex-row items-center justify-end gap-4">
+            <x-mary-button label="Cancelar" @click="$wire.modalativeConf = false" class="btn btn-cancel text-white" />
+            <x-mary-button wire:click="activeAcount()" label="{{ __('Activar') }}"
+                class="btn btn-success text-white" />
+        </div>
+    </x-mary-modal>
+
+    <x-mary-modal wire:model="modalDeletConf" class="backdrop-blur">
+        <div class="mb-5">
+            <h3 class="font-extrabold mb-12">{{ __('¿Estas seguro?') }}</h3>
+            <p>{{ __('Una vez se elimine un profesor, se eliminaran todos los datos asociados a la mismo incluyendo la calificaciones de los estudiantes que el profesor evalúo') }}
+            </p>
+        </div>
+        <div class="flex flex-row items-center justify-end gap-4">
+            <x-mary-button label="Cancelar" @click="$wire.modalDeletConf = false" class="btn btn-cancel text-white" />
+            <x-mary-button wire:click="destroy()" label="{{ __('Elinminar') }}" class="btn btn-error text-white" />
+        </div>
+    </x-mary-modal>
 </div>
