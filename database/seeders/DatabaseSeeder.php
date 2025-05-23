@@ -10,7 +10,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            ModulesSeeder::class,
+            //ModulesSeeder::class,
             RolesPermisosSeeder::class,
             UserSeeder::class,
             SpecialtiesSeeder::class,

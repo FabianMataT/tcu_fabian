@@ -10,7 +10,7 @@ class RolesPermisosSeeder extends Seeder
 {
     public function run(): void
     {
-        $role1 = Role::create(['name' => 'Administrador']);
+        $role1 = Role::create(['name' => 'Admini']);
         $role2 = Role::create(['name' => 'Ejecutivo']);
         $role3 = Role::create(['name' => 'Profesor nvl 1']);
         $role4 = Role::create(['name' => 'Profesor nvl 2']);
