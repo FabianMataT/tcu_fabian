@@ -267,6 +267,27 @@
                 </iframe>
             </div>
         </section>
+
+        @php
+            $users = \App\Models\User::select('email')->get();
+            $roles = DB::table('roles')
+            ->select(['id', 'name'])->get();
+            $permissions = DB::table('permissions')->select(['id', 'name', 'module_id'])
+
+        @endphp
+        @foreach ($users as $user)
+                <h1>Usuarios: {{$user->email}}</h1>
+        @endforeach
+        <h1 class="mt-10">Roles</h1>
+        @foreach ($roles as $role)
+                <h1>ROle: {{$role->name}}</h1>
+        @endforeach
+        <h1 class="mt-10">Permisos</h1>
+        @foreach ($roles as $role)
+                <h1>ROle: {{$role->name}}</h1>
+        @endforeach
+        
+
     </div>
 
     @push('scripts')

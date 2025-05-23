@@ -12,21 +12,21 @@ class DatabaseSeeder extends Seeder
         $this->call([
             //ModulesSeeder::class,
             //RolesPermisosSeeder::class,
-            UserSeeder::class,
+            //UserSeeder::class,
             SpecialtiesSeeder::class,
-            LevelsSeeder::class,
+            SubjectsSeeder::class,
+            /*LevelsSeeder::class,
             PositionsSeeder::class,
             TeachersSeeder::class,
             GrupsSeeder::class,
             SubGrupsSeeder::class,
-            SubjectsSeeder::class,
             SubjectsTaughtByTeachersSeeder::class,
             StudentsSeeder::class,
             LifeSkillsSeeder::class,
             StudentLifeSkillScoresSeeder::class,
             StudentLifeSkillPeriodScoresSeeder::class,
             StudentLifeSkillSubjectPeriodScoresSeeder::class,
-            StudentLifeSkillSubjectPeriodScoreDetailsSeeder::class,
+            StudentLifeSkillSubjectPeriodScoreDetailsSeeder::class, */
         ]);
     }
 }
