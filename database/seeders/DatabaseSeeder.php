@@ -10,12 +10,12 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            //ModulesSeeder::class,
-            //RolesPermisosSeeder::class,
-            //UserSeeder::class,
+            ModulesSeeder::class,
+            RolesPermisosSeeder::class,
+            UserSeeder::class,
             SpecialtiesSeeder::class,
             SubjectsSeeder::class,
-            /*LevelsSeeder::class,
+            LevelsSeeder::class,
             PositionsSeeder::class,
             TeachersSeeder::class,
             GrupsSeeder::class,
@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
             StudentLifeSkillScoresSeeder::class,
             StudentLifeSkillPeriodScoresSeeder::class,
             StudentLifeSkillSubjectPeriodScoresSeeder::class,
-            StudentLifeSkillSubjectPeriodScoreDetailsSeeder::class, */
+            StudentLifeSkillSubjectPeriodScoreDetailsSeeder::class, 
         ]);
     }
 }
