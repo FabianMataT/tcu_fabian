@@ -76,7 +76,7 @@ class Index extends Component
             ->when($this->middle_name, fn($q) => $q->where('middle_name', 'like', "%{$this->middle_name}%"))
             ->when($this->last_name1, fn($q) => $q->where('last_name1', 'like', "%{$this->last_name1}%"))
             ->when($this->last_name2, fn($q) => $q->where('last_name2', 'like', "%{$this->last_name2}%"))
-            ->when($this->id_card, fn($q) => $q->where('id_card', 'like', "%{$this->id_card}%"))
+            ->when($this->id_card, fn($q) => $q->where('id_card', $this->id_card))
             ->when($this->specialtie_id, fn($q) => $q->whereHas('subGrup.specialtie', fn($q2) => $q2->where('id', $this->specialtie_id)))
             ->when($this->level_id, fn($q) => $q->whereHas('subGrup.grup.level', fn($q2) => $q2->where('id', $this->level_id)))
             ->when($this->grup_id, fn($q) => $q->whereHas('subGrup.grup', fn($q2) => $q2->where('id', $this->grup_id)))
@@ -88,8 +88,6 @@ class Index extends Component
                     $sub->where('first_name', 'like', "%{$this->search}%")
                         ->orWhere('last_name1', 'like', "%{$this->search}%")
                         ->orWhere('last_name2', 'like', "%{$this->search}%")
-                        ->orWhere('id_card', 'like', "%{$this->search}%")
-                        ->orWhereHas('subGrup.grup.level', fn($q) => $q->where('name', 'like', "%{$this->search}%"))
                         ->orWhereHas('subGrup.specialtie', fn($q) => $q->where('acronym', 'like', "%{$this->search}%"));
                 });
             });
