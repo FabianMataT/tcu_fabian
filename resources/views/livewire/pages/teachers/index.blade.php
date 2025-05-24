@@ -25,7 +25,7 @@
                 <p class="text-sm font-medium">{{ $teacher->position->name }}</p>
             @endscope
             @scope('cell_rol', $teacher)
-                <p class="text-sm font-medium">{{ $teacher->user->roles->first()->name }}</p>
+                <p class="text-sm font-medium">{{ $teacher->user?->roles->first()->name ?? 'No asignado' }}</p>
             @endscope
             @scope('actions', $teacher)
                 <div class="flex gap-4 p-2">
@@ -33,10 +33,12 @@
                         <x-mary-button icon="o-eye" link="{{ route('teachers.show', $teacher->id) }}"
                             class="btn-sm btn-show" />
                     @endhaspermission
-                    @haspermission('teachers.edit')
-                        <x-mary-button icon="o-pencil" link="{{ route('teachers.edit', $teacher->id) }}"
-                            class="btn-sm btn-edit" />
-                    @endhaspermission
+                    @if ($teacher->user)
+                        @haspermission('teachers.edit')
+                            <x-mary-button icon="o-pencil" link="{{ route('teachers.edit', $teacher->id) }}"
+                                class="btn-sm btn-edit" />
+                        @endhaspermission
+                    @endif
                 </div>
             @endscope
             <x-slot:empty>

@@ -17,16 +17,16 @@ class DatabaseSeeder extends Seeder
             SubjectsSeeder::class,
             LevelsSeeder::class,
             PositionsSeeder::class,
-            TeachersSeeder::class,
+            //TeachersSeeder::class,
             GrupsSeeder::class,
             SubGrupsSeeder::class,
-            SubjectsTaughtByTeachersSeeder::class,
-            StudentsSeeder::class,
+            //SubjectsTaughtByTeachersSeeder::class,
+            //StudentsSeeder::class,
             LifeSkillsSeeder::class,
-            StudentLifeSkillScoresSeeder::class,
-            StudentLifeSkillPeriodScoresSeeder::class,
-            StudentLifeSkillSubjectPeriodScoresSeeder::class,
-            StudentLifeSkillSubjectPeriodScoreDetailsSeeder::class, 
-        ]);
+            //StudentLifeSkillScoresSeeder::class,
+            //StudentLifeSkillPeriodScoresSeeder::class,
+            //StudentLifeSkillSubjectPeriodScoresSeeder::class,
+            //StudentLifeSkillSubjectPeriodScoreDetailsSeeder::class, 
+        ]); 
     }
 }

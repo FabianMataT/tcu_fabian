@@ -41,7 +41,7 @@ class Edit extends Component
         $this->last_name2 = $this->teacher->last_name2;
         $this->email = $this->teacher->email;
         $this->phone = $this->teacher->phone;
-        $this->role_name = $this->user->roles->first()->name ?? null;
+        $this->role_name = $this->user?->roles->first()->name ?? 'Sin asignar';
         $this->selectedPosition = $this->teacher->position_id;
         $this->roles = Role::select('name as role_name')->get()->toArray();
     }

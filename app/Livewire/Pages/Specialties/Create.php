@@ -2,10 +2,11 @@
 
 namespace App\Livewire\Pages\Specialties;
 
-use App\Models\Specialtie;
 use Mary\Traits\Toast;
 use Livewire\Component;
+use App\Models\Specialtie;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
 
 class Create extends Component
@@ -28,8 +29,7 @@ class Create extends Component
         $image_path = null; 
 
         if ($this->image) {  
-            $image = $this->image->store('especialidades', 'public');
-            $image_path = $image;
+            $image_path = Storage::put('especialidades', $this->image);
         }
 
         Specialtie::create([

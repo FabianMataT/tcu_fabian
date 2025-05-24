@@ -38,9 +38,9 @@ class Edit extends Component
         if ($this->new_image) {
             if ($this->specialtie->image_path && Storage::disk('public')->exists($this->specialtie->image_path)) {
                 Storage::disk('public')->delete($this->specialtie->image_path);
-                $this->specialtie->image_path = $this->new_image->store('especialidades', 'public');
+                $this->specialtie->image_path = Storage::put('especialidades', $this->new_image);
             }
-            $this->specialtie->image_path = $this->new_image->store('especialidades', 'public');
+            $this->specialtie->image_path = Storage::put('especialidades', $this->new_image);
         }
 
         $this->specialtie->acronym = $this->acronym;

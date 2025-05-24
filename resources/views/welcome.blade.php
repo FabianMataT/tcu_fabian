@@ -15,7 +15,7 @@
                     Educación integral de calidad con enfoque técnico y valores humanos
                 </p>
                 <div class="flex flex-col sm:flex-row justify-center gap-4 items-center animate-fade-in">
-                    <a href="#admisiones"
+                    <a href="{{ route('guest.admissions.index') }}"
                         class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-xl transition duration-300 shadow-lg">
                         Proceso de Admisión
                     </a>
@@ -133,14 +133,14 @@
             <div class="text-center mb-12">
                 <div class="inline-block px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-semibold">
                     Instalaciones</div>
-                <h2 class="text-3xl font-bold text-gray-800 mt-2">Nuestro Campus</h2>
+                <h2 class="text-3xl font-bold text-gray-800 mt-2">Nuestras Intalaciones</h2>
                 <p class="text-gray-600 mt-2 max-w-3xl mx-auto">Contamos con modernas instalaciones diseñadas para
                     proporcionar un ambiente óptimo de aprendizaje.</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center justify-center">
                 <div class="group relative overflow-hidden rounded-xl shadow-lg slide-left fade-on-scroll">
-                    <img src="/api/placeholder/400/300" alt="Biblioteca"
+                    <img src="{{ asset('images/biblioteca.jpeg') }}" alt="Biblioteca" loading="lazy"
                         class="w-full h-70 object-cover transition-transform duration-500 group-hover:scale-110">
                     <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6">
                         <div>
@@ -151,21 +151,23 @@
                     </div>
                 </div>
 
+
                 <div class="group relative overflow-hidden rounded-xl shadow-lg animate-fade-in fade-on-scroll">
-                    <img src="/api/placeholder/400/300" alt="Áreas deportivas"
+                    <img src="{{ asset('images/aulas.jpeg') }}" alt="Auditorio" loading="lazy"
                         class="w-full h-70 object-cover transition-transform duration-500 group-hover:scale-110">
                     <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6">
                         <div>
-                            <h3 class="text-white text-xl font-bold">Áreas Deportivas</h3>
-                            <p class="text-gray-200 mt-2">Canchas multiusos, gimnasio y áreas verdes para actividades
-                                físicas.</p>
+                            <h3 class="text-white text-xl font-bold">Aulas</h3>
+                            <p class="text-gray-200 mt-2">Ambientes modernos y funcionales diseñados para favorecer el
+                                aprendizaje.
+                            </p>
                         </div>
                     </div>
-
                 </div>
 
                 <div class="group relative overflow-hidden rounded-xl shadow-lg slide-right fade-on-scroll">
-                    <img src="/api/placeholder/400/300" alt="Laboratorio de computación"
+                    <img src="{{ asset('images/laboratoriocomputo.jpeg') }}" alt="Laboratorio de computación"
+                        loading="lazy"
                         class="w-full h-70 object-cover transition-transform duration-500 group-hover:scale-110">
                     <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6">
                         <div>
@@ -179,20 +181,19 @@
 
             <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6 items-center justify-center max-w-4xl mx-auto">
                 <div class="group relative overflow-hidden rounded-xl shadow-lg slide-left fade-on-scroll">
-                    <img src="/api/placeholder/400/300" alt="Auditorio"
+                    <img src="{{ asset('images/areasdeportivas.jpeg') }}" alt="Áreas deportivas" loading="lazy"
                         class="w-full h-70 object-cover transition-transform duration-500 group-hover:scale-110">
                     <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6">
                         <div>
-                            <h3 class="text-white text-xl font-bold">Aulas</h3>
-                            <p class="text-gray-200 mt-2">Ambientes modernos y funcionales diseñados para favorecer el
-                                aprendizaje.
-                            </p>
+                            <h3 class="text-white text-xl font-bold">Áreas Deportivas</h3>
+                            <p class="text-gray-200 mt-2">Canchas multiusos, gimnasio y áreas verdes para actividades
+                                físicas.</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="group relative overflow-hidden rounded-xl shadow-lg slide-right fade-on-scroll">
-                    <img src="{{ asset('images/CTP_DN_Logo.jpg') }}" alt="Biblioteca" loading="lazy"
+                    <img src="{{ asset('images/comedor.jpeg') }}" alt="Biblioteca" loading="lazy"
                         class="w-full h-70 object-cover transition-transform duration-500 group-hover:scale-110">
                     <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6">
                         <div>

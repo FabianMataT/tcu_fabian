@@ -148,8 +148,6 @@ $menuOptions = [
                                     @click.stop="$dispatch('mary-toggle-theme')" />
                                 <x-mary-menu-item label="{{ __('Módulo de usuarios') }}" icon="o-building-storefront"
                                     link="/" />
-                                <x-mary-menu-item label="{{ __('Módulo de administradores') }}"
-                                    icon="o-building-library" link="{{ route('dashboard') }}" />
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
                                     <button type="submit">

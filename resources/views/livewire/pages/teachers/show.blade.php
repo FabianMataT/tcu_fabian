@@ -5,11 +5,11 @@
         </x-slot:subtitle>
         <x-slot:actions>
             <div class="flex flex-wrap gap-2 justify-end">
-                @haspermission('teachers.edit')
-                    <x-mary-button link="{{ route('teachers.edit', $teacher->id) }}" label="{{ __('Editar') }}"
-                        class="btn bg-blue-500 text-white hover:bg-blue-600" />
-                @endhaspermission
                 @if ($teacher->user)
+                    @haspermission('teachers.edit')
+                        <x-mary-button link="{{ route('teachers.edit', $teacher->id) }}" label="{{ __('Editar') }}"
+                            class="btn bg-blue-500 text-white hover:bg-blue-600" />
+                    @endhaspermission
                     @haspermission('teachers.delete')
                         <x-mary-button label="Desactivar cuenta" class="btn-delete" @click="$wire.modaldesativeConf = true" />
                     @endhaspermission

@@ -11,8 +11,6 @@
                     link="{{ route('profile.show') }}" />
                 <x-mary-button icon="o-building-storefront" label="{{ __('Módulo de usuarios') }}" size="sm"
                     link="/" />
-                <x-mary-button icon="o-building-library" label="{{ __('Módulo de administradores') }}" size="sm"
-                    link="{{ route('dashboard') }}" />
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <x-mary-button type="submit" icon="o-arrow-left-end-on-rectangle" label="{{ __('Cerrar sesión') }}"

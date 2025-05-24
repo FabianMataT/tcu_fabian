@@ -41,9 +41,9 @@ class Index extends Component
         $this->search = '';
     }
 
-    public function deleteConf(Specialtie $specialtie): void
+    public function deleteConf($specialtie): void
     {
-        $this->specialtie = $specialtie;
+        $this->specialtie = Specialtie::where('id', $specialtie)->first();
         $this->modalDeletConf = true;
     }
 
