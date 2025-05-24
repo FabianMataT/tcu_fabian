@@ -6,7 +6,8 @@
             <img class="rounded-xl shadow-md max-h-80 object-cover w-auto" src="{{ $specialtie->image }}"
                 alt="Imagen de la especialidad">
         </div>
-        {{ $specialtie->image }}
+        {{ $specialtie->image }} <br />
+        {{ asset('images/CTP_DN_Logo.jpg') }}
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-gray-700 dark:text-gray-200">
             <div>
                 <span class="font-semibold">{{ __('Acrónimo:') }}</span>
