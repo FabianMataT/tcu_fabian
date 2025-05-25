@@ -33,7 +33,7 @@
         <section id="nosotros" class="mb-20">
             <div
                 class="flex flex-col md:flex-row items-center gap-12 fade-on-scroll transition-all duration-700 ease-out opacity-0 translate-y-2">
-                <img src="{{ asset('images/cpt.jpg') }}" alt="logo"
+                <img src="{{ asset('images/colegio.jpg') }}" alt="logo"
                     class="w-full md:w-1/2 h-auto rounded-xl shadow-xl object-cover transition-all duration-1000 ease-out opacity-0 translate-y-4 animate-[fadeInUp_1.5s_ease-out_forwards]" />
                 <div class="w-full md:w-1/2 space-y-8">
                     <div
@@ -78,19 +78,19 @@
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
                 <div>
-                    <div class="text-5xl font-bold mb-2 counter" data-target="25">0</div>
+                    <div class="text-5xl font-bold mb-2 counter" data-target="20">0</div>
                     <div class="text-blue-200 text-lg">Años de experiencia</div>
                 </div>
                 <div>
-                    <div class="text-5xl font-bold mb-2 counter" data-target="95">0</div>
+                    <div class="text-5xl font-bold mb-2 counter" data-target="97">0</div>
                     <div class="text-blue-200 text-lg">Índice de graduación</div>
                 </div>
                 <div>
-                    <div class="text-5xl font-bold mb-2 counter" data-target="50">0</div>
+                    <div class="text-5xl font-bold mb-2 counter" data-target="40">0</div>
                     <div class="text-blue-200 text-lg">Docentes calificados</div>
                 </div>
                 <div>
-                    <div class="text-5xl font-bold mb-2 counter" data-target="1200">0</div>
+                    <div class="text-5xl font-bold mb-2 counter" data-target="850">0</div>
                     <div class="text-blue-200 text-lg">Estudiantes activos</div>
                 </div>
             </div>
