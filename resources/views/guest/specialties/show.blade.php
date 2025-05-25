@@ -7,7 +7,8 @@
         </div>
 
         {{-- Contenedor de información --}}
-        <div class="w-full max-w-4xl bg-white/80 backdrop-blur-md p-6 rounded-3xl shadow-xl space-y-6 slide-left animate-visible">
+        <div
+            class="w-full max-w-4xl bg-white/80 backdrop-blur-md p-6 rounded-3xl shadow-xl space-y-6 slide-left animate-visible">
             <div class="space-y-1">
                 <p class="text-gray-800 text-4xl">{{ $specialtie->name }}</p>
             </div>
@@ -19,11 +20,13 @@
         </div>
 
         {{-- Materias asociadas --}}
-        <div class="w-full max-w-4xl bg-white/70 backdrop-blur-lg p-6 rounded-3xl shadow-md slide-right animate-visible">
+        <div
+            class="w-full max-w-4xl bg-white/70 backdrop-blur-lg p-6 rounded-3xl shadow-md slide-right animate-visible">
             <h2 class="text-2xl font-bold text-indigo-800 mb-4">Materias asociadas</h2>
 
             @forelse ($specialtie->subject as $subject)
-                <div class="p-4 bg-indigo-50 rounded-xl shadow-sm mb-2 border border-indigo-100 hover:bg-indigo-100 transition-all">
+                <div
+                    class="p-4 bg-indigo-50 rounded-xl shadow-sm mb-2 border border-indigo-100 hover:bg-indigo-100 transition-all">
                     <p class="font-medium text-indigo-900">{{ $subject->name }}</p>
                 </div>
             @empty
@@ -45,13 +48,13 @@
                 visítanos en nuestras instalaciones.
             </p>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start lg:justify-items-center mr-5 ml-5 md:mx-20 mt-10">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start lg:justify-items-center mr-5 ml-5 md:mx-20 mt-10">
             {{-- Teléfono --}}
             <div class="flex items-start gap-4">
                 <img src="{{ asset('images/phone_logo.png') }}" alt="phone_logo" class="w-8 h-8">
                 <div>
                     <h3 class="text-lg font-semibold text-gray-800">Teléfono</h3>
-                    <p class="text-gray-600 mt-1">(+506) 1234-5678</p>
+                    <p class="text-gray-600 mt-1">(+506) 2553-6190</p>
                     <p class="text-gray-600">Horario: Lunes a Viernes de 7:00 AM a 4:00 PM</p>
                 </div>
             </div>
@@ -70,6 +73,7 @@
             </a>
 
             {{-- WhatsApp --}}
+            {{--
             <a href="https://wa.me/50612345678" target="_blank">
                 <div class="flex items-start gap-4">
                     <img src="{{ asset('images/whatsapp_logo.png') }}" alt="whatsapp_logo" class="w-8 h-8">
@@ -81,12 +85,13 @@
                     </div>
                 </div>
             </a>
+            --}}
         </div>
     </section>
 
     @push('scripts')
         <script>
-            document.addEventListener('DOMContentLoaded', function () {
+            document.addEventListener('DOMContentLoaded', function() {
                 document.querySelectorAll('.fade-on-scroll').forEach(el => {
                     el.classList.add('animate-visible');
                 });

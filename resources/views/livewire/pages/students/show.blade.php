@@ -61,7 +61,7 @@
                     {{ __('Calificación') }}
                 </p>
                 <div>
-                    {{ $student->studentLifeSkillScore->first()?->score ?? 'N/A' }}
+                    {{ number_format($student->studentLifeSkillScore->first()?->score, 0) ?? 'N/A' }}
                 </div>
                 @php
                     $score = $student->studentLifeSkillScore->first()?->score ?? null;

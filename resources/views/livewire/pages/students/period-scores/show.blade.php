@@ -3,7 +3,7 @@
         <x-slot:subtitle>
             Estudiante: {{ $studentperiodscore->student->first_name }} {{ $studentperiodscore->student->last_name1 }}
             {{ $studentperiodscore->student->last_name2 }} <br>
-            Calificación general: {{ $studentperiodscore->score }}
+            Calificación general: {{ number_format($studentperiodscore->score, 0) }}
         </x-slot:subtitle>
         <x-slot:actions>
             <x-mary-button label="Imprimir" icon="o-printer" class="btn-primary no-print" onclick="window.print()" />
@@ -18,12 +18,12 @@
         <x-mary-card shadow class="mt-4 p-6 bg-gray-100 dark:bg-gray-700">
             <div class="flex justify-between items-start gap-4 flex-wrap">
                 <div class="flex-1 min-w-[250px]">
-                    <a href="{{ route('students.period.score.show', $subjectPeriodScore->id) }}">
+                    <a href="{{ route('students.life.skill.subject.period.score.show', $subjectPeriodScore->id) }}">
                         <x-slot name="title">
-                            {{ __('Materia ') }} {{ $subjectPeriodScore->subject->name }}
+                            {{ __('Materia: ') }} {{ $subjectPeriodScore->subject->name }}
                         </x-slot>
                         <p class="font-medium text-lg">
-                            Calificación {{ $subjectPeriodScore->score }}
+                            Calificación {{ number_format($subjectPeriodScore->score, 0) }}
                         </p>
                         <p class="font-medium text-sm">
                             Puntos: {{ $subjectPeriodScore->earned_points }} / {{ $subjectPeriodScore->total_points }}

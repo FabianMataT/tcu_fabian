@@ -15,7 +15,7 @@
                     <th class="bg-gray-200 dark:bg-gray-700 p-2 border-r">N°</th>
                     <th class="bg-gray-200 dark:bg-gray-700 p-2 border-r">Habilidades personales requeridas en
                         cualquier campo en que nos desempeñamos y permiten interactuar con los démas</th>
-                    <th class="p-2 border-r text-center text-xl" colspan="4">Nota {{ $subjectperiodscore->score }}
+                    <th class="p-2 border-r text-center text-xl" colspan="4">Nota {{ number_format($subjectperiodscore->score, 0) }}
                     </th>
                 </tr>
             </thead>

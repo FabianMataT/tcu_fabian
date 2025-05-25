@@ -197,7 +197,7 @@
                         class="w-full h-70 object-cover transition-transform duration-500 group-hover:scale-110">
                     <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6">
                         <div>
-                            <h3 class="text-white text-xl font-bold">Comenor</h3>
+                            <h3 class="text-white text-xl font-bold">Comedor</h3>
                             <p class="text-gray-200 mt-2">Espacio cómodo y limpio donde los estudiantes pueden
                                 disfrutar de sus alimentos.</p>
                         </div>
@@ -219,13 +219,13 @@
                 </p>
             </div>
             <div
-                class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start lg:justify-items-center mr-5 ml-5 md:mx-20 mt-10">
+                class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start lg:justify-items-center mr-5 ml-5 md:mx-20 mt-10">
                 {{-- Teléfono --}}
                 <div class="flex items-start gap-4">
                     <img src="{{ asset('images/phone_logo.png') }}" alt="phone_logo" class="w-8 h-8">
                     <div>
                         <h3 class="text-lg font-semibold text-gray-800">Teléfono</h3>
-                        <p class="text-gray-600 mt-1">(+506) 1234-5678</p>
+                        <p class="text-gray-600 mt-1">(+506) 2553-6190</p>
                         <p class="text-gray-600">Horario: Lunes a Viernes de 7:00 AM a 4:00 PM</p>
                     </div>
                 </div>
@@ -244,6 +244,7 @@
                 </a>
 
                 {{-- WhatsApp --}}
+                {{--
                 <a href="https://wa.me/50612345678" target="_blank">
                     <div class="flex items-start gap-4">
                         <img src="{{ asset('images/whatsapp_logo.png') }}" alt="whatsapp_logo" class="w-8 h-8">
@@ -255,6 +256,7 @@
                         </div>
                     </div>
                 </a>
+                --}}
             </div>
 
             {{-- Mapa --}}

@@ -1,13 +1,13 @@
 <div>
     <x-mary-card class="table-cover" separator>
         <div class="flex flex-col sm:flex-row justify-between items-center">
-            <h1 class="text-xl font-bold">Especialidad: {{ $subjectxteacher->subject->specialtie->name }}</h1>
+            <h1 class="text-xl font-bold">{{ $subjectxteacher->subject->specialtie->name }}</h1>
             <x-mary-button icon="o-arrow-left" link="{{ route('subjectsxteachers.index') }}"
                 class="btn-primary w-full sm:w-auto">
                 {{ __('Regresar') }}
             </x-mary-button>
         </div>
-        <p class="mt-5 text-lg">Materia: <strong>{{ $subjectxteacher->subject->name }}</strong></p>
+        <p class="mt-5 text-lg"><strong>Materia:</strong> {{ $subjectxteacher->subject->name }}</p>
         <div class="mt-5 grid md:grid-cols-2 gap-4">
             <div>
                 <h3 class="text-lg font-medium">Profesor</h3>

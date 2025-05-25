@@ -6,18 +6,21 @@ use App\Models\Grup;
 use App\Models\Student;
 use App\Models\SubGrup;
 use App\Models\Specialtie;
+use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\StudentLifeSkillScore;
 
 class ImportStudentsFromExcel
 {
+    use WithFileUploads;
+
     public array $duplicate_students = [];
 
     public function store_students($excel)
     {
-        $file = $excel->store('temp');
-        $importedData = Excel::toCollection(null, storage_path("app/{$file}"))->first();
+        $filePath = $excel->getRealPath();
+        $importedData = Excel::toCollection(null, $filePath)->first();
 
         $expectedHeader = [
             'Primer Apellido',
@@ -28,6 +31,10 @@ class ImportStudentsFromExcel
             'Sección',
             'Especialidad'
         ];
+
+        if (file_exists($filePath)) {
+            unlink($filePath);
+        }
 
         $actualHeader = $importedData->first()->toArray();
 
@@ -142,7 +149,7 @@ class ImportStudentsFromExcel
                     'last_name2'   => $last_name2,
                     'id_card'      => $id_card,
                 ]);
-                
+
                 StudentLifeSkillScore::create([
                     'student_id' => $student->id,
                     'score' => 100
@@ -171,8 +178,8 @@ class ImportStudentsFromExcel
 
     public function store_grup_of_students($excel, $grup_id)
     {
-        $file = $excel->store('temp');
-        $importedData = Excel::toCollection(null, storage_path("app/{$file}"))->first();
+        $filePath = $excel->getRealPath();
+        $importedData = Excel::toCollection(null, $filePath)->first();
 
         $expectedHeader = [
             'primer-apellido',
@@ -181,6 +188,10 @@ class ImportStudentsFromExcel
             'numero-de-cedula',
             'especialidad'
         ];
+
+        if (file_exists($filePath)) {
+            unlink($filePath);
+        }
 
         $actualHeaderRaw = $importedData->first()->toArray();
 

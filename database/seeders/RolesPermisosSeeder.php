@@ -23,8 +23,8 @@ class RolesPermisosSeeder extends Seeder
         Permission::create(['name' => 'subjects.menu', 'description' => 'Materias', 'module_id' => 1])->syncRoles([$role1, $role2, $role3]);
         Permission::create(['name' => 'teachers.index', 'description' => 'Profesores', 'module_id' => 1])->syncRoles([$role1, $role2]);
         Permission::create(['name' => 'positions.index', 'description' => 'Puestos', 'module_id' => 1])->syncRoles([$role1, $role2]);
-        Permission::create(['name' => 'life.skills.index', 'description' => 'Competencias para el desarrollo humano', 'module_id' => 1])->syncRoles([$role1, $role2, $role3]);
-        Permission::create(['name' => 'teacher.life.skills.to.assess.index', 'description' => 'Ver los grupos a calificar las compentencias de los estudiantes', 'module_id' => 1])->syncRoles([$role1, $role2, $role3, $role4]);
+        Permission::create(['name' => 'life.skills.index', 'description' => 'Competencias Humanas', 'module_id' => 1])->syncRoles([$role1, $role2, $role3]);
+        Permission::create(['name' => 'teacher.life.skills.to.assess.index', 'description' => 'Calificar Estudiantes', 'module_id' => 1])->syncRoles([$role1, $role2, $role3, $role4]);
         Permission::create(['name' => 'roles.index', 'description' => 'Roles y Permisos', 'module_id' => 1])->syncRoles([$role1, $role2]);
 
         //Especialidades

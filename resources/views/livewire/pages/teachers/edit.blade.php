@@ -27,7 +27,7 @@
                     <x-mary-input label="{{ __('Correo') }}" wire:model="email" type="email" />
                 </div>
                 <div class="w-full">
-                    <x-mary-password label="{{ __('Password') }}" wire:model="password" right />
+                    <x-mary-password label="{{ __('Password') }}" wire:model="password" right /> 
                 </div>
             </div>
 

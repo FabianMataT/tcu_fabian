@@ -23,8 +23,9 @@
             </div>
 
             <x-mary-input label="{{ __('Correo') }}" wire:model="email" type="email" />
+            
+            <x-mary-input label="{{ __('Teléfono ') }}" wire:model="phone" /> 
             <h2 class="mt-5 text-gray-700 dark:text-gray-100">La contraseña es el primer nombre + el teléfono, ejemplo (Fabian8435948)</h2>
-            <x-mary-input label="{{ __('Teléfono ') }}" wire:model="phone" />
 
             <x-mary-select label="{{ __('Puesto') }}" :options="$positions" option-label="name"
                 placeholder="Seleccione un puesto" placeholder-value="" wire:model="selectedPosition" />

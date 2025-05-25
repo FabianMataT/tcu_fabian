@@ -8,7 +8,7 @@
                             {{ __('Periodo ') }} {{ $periodScore->period }}
                         </x-slot>
                         <p class="font-medium text-lg">
-                            Calificación {{ $periodScore->score }}
+                            Calificación {{ number_format($periodScore->score, 0) }}
                         </p>
                         <p class="text-sm">
                             {{ $periodScore->created_at }}
