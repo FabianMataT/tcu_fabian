@@ -1,10 +1,9 @@
 <h1>CTP Dulce Nombre</h1>
-
-![ctp_dulce_nombre](https://github.com/user-attachments/assets/cdafb97d-1932-416a-a682-b2ba4320559d)
-
 <p>
     Es una plataforma desarrollada con <strong>Laravel 12</strong>.
 </p>
+
+![ctp_dulce_nombre](https://github.com/user-attachments/assets/cdafb97d-1932-416a-a682-b2ba4320559d)
 
 <h2>Tecnologías Utilizadas</h2>
 <ul>
